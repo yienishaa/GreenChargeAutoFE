@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/Home';
 import Vehicles from '../pages/Vehicles';
 import LoanCalculator from '../pages/LoanCalculator';
+import UploadForm from '../pages/UploadForm';
 
 const AppRoutes = () => {
     return (
@@ -10,6 +11,7 @@ const AppRoutes = () => {
             <Route path="/" element={<Home />} />
             <Route path="/vehicles" element={<Vehicles />} />
             <Route path="/loan" element={<LoanCalculator />} />
+            <Route path="/UploadForm" element={<UploadForm />} />
         </Routes>
     );
 };

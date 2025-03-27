@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Reviews from "../components/Reviews";
+import {Box, Grid, Typography} from "@mui/material";
+import {Image} from "@mui/icons-material";
+import logo from "../images/logo.webp";
 
 const Vehicles = () => {
   const [vehicles, setVehicles] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-
+/*
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
@@ -28,16 +32,15 @@ const Vehicles = () => {
   if (error) {
     return <div>Error: {error}</div>;
   }
-
+*/
   return (
-    <div>
-      <h1>Vehicles</h1>
-      <ul>
-        {vehicles.map((vehicle, index) => (
-          <li key={index}>{vehicle.name}</li> // Adjust this based on your vehicle object structure
-        ))}
-      </ul>
-    </div>
+    <>
+      <Grid container spacing={2}>
+        <Grid item>
+          <img src={logo}/>
+        </Grid>
+      </Grid>
+    </>
   );
 };
 

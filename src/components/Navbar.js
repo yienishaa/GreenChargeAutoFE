@@ -9,12 +9,14 @@ import {
 } from "@mui/material";
 import logo from "../images/logo.webp";
 import { useState } from "react";
+import UploadForm from "../pages/UploadForm";
 
 const navLinks = [
   { label: "Home", link: "/" },
   { label: "Vehicles", link: "/vehicles" },
   { label: "Deals", link: "/hotdeals" },
   { label: "Loan Calculator", link: "/loan" },
+  { label: "UploadForm", link: "/UploadForm" },
 ];
 
 function Navbar() {
@@ -22,7 +24,7 @@ function Navbar() {
   const [menu, showMenu] = useState(false);
 
   return (
-    <AppBar position="static" sx={{ bgcolor: "#4ade80" }}>
+    <AppBar position="static" >
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ height: "100px" }}>
           <img
@@ -40,20 +42,9 @@ function Navbar() {
                 key={index}
                 component={Link}
                 to={link.link}
-                sx={{
-                  color: path === link.link ? "blue" : "white",
-                  textTransform: "uppercase",
-                  height: "100%",
-                  "&:hover": {
-                    backgroundColor:
-                      path === link.link
-                        ? "rgba(0, 255, 0, 0.1)"
-                        : "rgba(255, 255, 255, 0.1)",
-                  },
-                  marginX: "20px",
-                }}
+                color="secondary"
               >
-                <Typography variant="h6">{link.label}</Typography>
+                <Typography variant="h6" fontFamily="Arial">{link.label}</Typography>
               </Button>
             ))}
           </Box>

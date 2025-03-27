@@ -1,42 +1,50 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import VehicleCard from "../components/VehicleCard";
+import { Link } from "react-router-dom";
+
+const vehicles = [{vid: 1, brand: "Toyota", description: "Good car", hasBeenInAccident: true, manufacturedYear: Date.now(), mileage: 192000, model: "Corolla", price: 1234, quantity: 1}]
 
 const Vehicles = () => {
-  const [vehicles, setVehicles] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // const [vehicles, setVehicles] = useState([]);
+  // const [error, setError] = useState(null);
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchVehicles = async () => {
-      try {
-        const response = await axios.get("http://localhost:8080/vehicles");
-        setVehicles(response.data); // Assuming the response data is an array of vehicles
-      } catch (e) {
-        setError(e.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchVehicles = async () => {
+  //     try {
+  //       const response = await axios.get("http://localhost:8080/vehicles");
+  //       setVehicles(response.data);
+  //     } catch (e) {
+  //       setError(e.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchVehicles();
-  }, []); // Empty dependency array means this effect runs once on mount
+  //   fetchVehicles();
+  // }, []); 
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  // if (error) {
+  //   return <div>Error: {error}</div>;
+  // }
 
   return (
-    <div>
+    <div className="flex flex-col items-center pt-28">
       <h1>Vehicles</h1>
-      <ul>
-        {vehicles.map((vehicle, index) => (
-          <li key={index}>{vehicle.name}</li> // Adjust this based on your vehicle object structure
+      <ul className="grid w-min">
+        {vehicles.map((vehicle) => (
+          <Link to={`/vehicles/${vehicle.vid}`}>
+
+          <li key={vehicle.vid}><VehicleCard car={vehicle}/></li> 
+          </Link>
         ))}
       </ul>
+
     </div>
   );
 };

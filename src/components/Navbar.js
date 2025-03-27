@@ -1,73 +1,46 @@
 import { Link, useLocation } from "react-router-dom";
-import {
-  AppBar,
-  Toolbar,
-  Button,
-  Typography,
-  Container,
-  Box,
-} from "@mui/material";
 import logo from "../images/logo.webp";
+import basket from "../images/basket.svg";
 import { useState } from "react";
 
 const navLinks = [
   { label: "Home", link: "/" },
   { label: "Vehicles", link: "/vehicles" },
-  { label: "Deals", link: "/hotdeals" },
   { label: "Loan Calculator", link: "/loan" },
 ];
 
 function Navbar() {
   const path = useLocation().pathname;
-  const [menu, showMenu] = useState(false);
+  const loggedIn = false;
 
   return (
-    <AppBar position="static" sx={{ bgcolor: "#4ade80" }}>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ height: "100px" }}>
-          <img
-            className="mr-5"
-            height={100}
-            width={100}
-            src={logo}
-            alt="Logo"
-          />
-          <Box
-            sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end" }}
-          >
-            {navLinks.map((link, index) => (
-              <Button
-                key={index}
-                component={Link}
-                to={link.link}
-                sx={{
-                  color: path === link.link ? "blue" : "white",
-                  textTransform: "uppercase",
-                  height: "100%",
-                  "&:hover": {
-                    backgroundColor:
-                      path === link.link
-                        ? "rgba(0, 255, 0, 0.1)"
-                        : "rgba(255, 255, 255, 0.1)",
-                  },
-                  marginX: "20px",
-                }}
-              >
-                <Typography variant="h6">{link.label}</Typography>
-              </Button>
-            ))}
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <Button component={Link} to="/cart" sx={{ marginRight: "20px" }}>
-              <img height={75} width={75} src={logo} alt="Cart" />
-            </Button>
-            <Button onClick={() => showMenu(!menu)}>
-              <img height={100} width={100} src={logo} alt="Menu" />
-            </Button>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+    <div className="justify-between fixed w-full flex px-5 bg-gradient-to-b pb-5 from-green-300/80 to-transparent via-60% via-green-300/80 z-10">
+      <div className="flex flex-col items-center text-center">
+        <img src={logo} height={64} width={64} alt="logo" />
+        <h1 className="font-serif ">Green Charge Auto</h1>
+      </div>
+      <ul className="flex gap-x-20 pb-5 items-end">
+        {navLinks.map((link) => (
+          <Link to={link.link}>
+            <span
+              className={`${
+                path === link.link ? "text-white" : "text-black"
+              } hover:text-gray-400 transition-colors`}
+            >
+              {link.label}
+            </span>
+          </Link>
+        ))}
+      </ul>
+      <div className="flex items-center justify-between gap-x-5">
+        <Link to="/cart">
+          <img src={basket} alt="cart" width={50} height={50} />
+        </Link>
+        <button className="rounded-lg py-2 px-5 border-black border-2 hover:text-gray-900 transition-all">
+          {loggedIn ? "Sign Out" : "Sign In"}
+        </button>
+      </div>
+    </div>
   );
 }
 

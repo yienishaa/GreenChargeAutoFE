@@ -5,7 +5,7 @@ import Vehicles from '../pages/Vehicles';
 import LoanCalculator from '../pages/LoanCalculator';
 import UploadForm from '../pages/UploadForm';
 import VehicleDetail from '../pages/VehicleDetail';
-import Cart from "../pages/CartContainer";
+import Cart from "../pages/Cart";
 
 const AppRoutes = () => {
     return (

@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import ArrowOutward from "@mui/icons-material/ArrowOutward";
 import CategoryCard from "../components/CategoryCard";
 
-import suv from "../images/suv.png";
-import sedan from "../images/sedan.png";
-import hatchback from "../images/hatchback.png";
-import hybrid from "../images/hybrid.png";
-import coupe from "../images/coupe.png";
+import suv from "../images/suv.avif";
+import sedan from "../images/sedan.webp";
+import hatchback from "../images/hatchback.jpg";
+import minivan from "../images/minivan.jpg";
+import coupe from "../images/coupe.avif";
 import loan from "../images/loan.png";
 import placeholder from "../images/placeholder.png";
 
@@ -16,14 +16,14 @@ const Home = () => {
     { image: suv, category: "SUV", span: "big" },
     { image: sedan, category: "Sedan", span: "big" },
     { image: hatchback, category: "Hatchback", span: "small" },
-    { image: hybrid, category: "Hybrid", span: "small" },
+    { image: minivan, category: "Minivan", span: "small" },
     { image: coupe, category: "Coupe", span: "small" },
   ];
 
   return (
     <div className="pb-10 w-full flex flex-col items-center justify-center gap-y-10">
       <section id="featured" className="w-full max-h-lvh flex relative overflow-y-hidden">
-        <img src={placeholder} alt="bmw" className="h-full object-center" />
+        <img src={placeholder} alt="bmw" className="h-full aspect-video object-cover" />
       </section>
       <section id="type" className="w-2/3 grid grid-cols-6 items-end">
         <h1 className="text-4xl col-span-5 text-lime-700 font-semibold">Browse by Type</h1>

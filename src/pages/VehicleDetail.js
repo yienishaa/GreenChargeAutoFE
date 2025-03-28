@@ -10,7 +10,6 @@ const VehicleDetail = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Replace this URL with your API endpoint to fetch vehicle details by ID
     fetch(`http://localhost:8080/vehicles/${id}`)
       .then((response) => response.json())
       .then((data) => {

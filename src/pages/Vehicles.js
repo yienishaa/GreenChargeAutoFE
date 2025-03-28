@@ -13,27 +13,30 @@ const Vehicles = () => {
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
+
         const response = await axios.get("http://localhost:8080/vehicles/admin/all");
         setVehicles(response.data); // Assuming the response data is an array of vehicles
+
       } catch (e) {
         setError(e.message);
       } finally {
         setLoading(false);
       }
     };
-
+    
     fetchVehicles();
-  }, []); // Empty dependency array means this effect runs once on mount
+  }, []); 
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="pt-20">Loading...</div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="pt-20">Error: {error}</div>;
   }
 
   return (
+
     <>
       <Grid container spacing={2}>
         <Grid item>

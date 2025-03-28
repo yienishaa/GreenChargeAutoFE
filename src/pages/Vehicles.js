@@ -44,6 +44,7 @@ const Vehicles = () => {
               <li key={v.id}>
                 <strong>{v.brand} {v.model}</strong><br/>
                 <img src={`https://greencharge-catalog.s3.us-east-1.amazonaws.com/${v.image}`}  />
+
               </li>
           ))}
 

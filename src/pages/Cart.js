@@ -13,12 +13,15 @@ import {
     ListItemText,
     Stack,
     TextField,
-    Divider,
     Box,
     Collapse,
     Snackbar,
-    Alert
+    Alert, colors
 } from "@mui/material";
+
+import CancelIcon from '@mui/icons-material/Cancel';
+import Divider from '@mui/material/Divider';
+
 
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
@@ -49,90 +52,96 @@ function Cart() {
     return (
         <Container sx={{ py: 16 }}>
             <Typography variant="h4" gutterBottom>Shopping Cart</Typography>
-
-            <Grid container spacing={4}>
-                {/* Cart Items */}
-                <Grid item xs={12} md={8}>
-                    <Card>
-                        <CardContent>
-                            {cartItems.length === 0 ? (
-                                <Box textAlign="center" py={5}>
-                                    <Typography variant="h6" gutterBottom>Your cart is empty</Typography>
-                                    <Button variant="outlined" onClick={() => navigate('/vehicles')}>
-                                        Continue Shopping
-                                    </Button>
+                <Box sx={{border: 1, borderRadius: 4, borderColor: "secondary.gray"}}>
+                    <Stack direction="row" >
+                        <Box sx={{width: "70%"}}>
+                            <Box sx={{bgcolor: 'background.default', borderRadius: 4}}>
+                                <Box>
+                                    {cartItems.length === 0 ? (
+                                        <Box textAlign="center" py={5}>
+                                            <Typography variant="h6" gutterBottom>Your cart is empty</Typography>
+                                            <Button variant="outlined" onClick={() => navigate('/vehicles')}>
+                                                Continue Shopping
+                                            </Button>
+                                        </Box>
+                                    ) : (
+                                        <List>
+                                            {cartItems.map((item) => (
+                                                <Collapse key={item.id} in={true} timeout={400}>
+                                                    <ListItem alignItems="flex-start" sx={{ mb: 2 }}>
+                                                        <ListItemAvatar>
+                                                            <Avatar
+                                                                variant="rounded"
+                                                                src={item.imageUrl}
+                                                                sx={{ width: 80, height: 80, mr: 2 }}
+                                                            />
+                                                        </ListItemAvatar>
+                                                        <ListItemText
+                                                            primary={item.name}
+                                                            secondary={`$${item.price.toFixed(2)} each`}
+                                                            slotProps={{
+                                                                primary: {
+                                                                    sx: { color: 'text.dark', fontWeight: 'bold' },
+                                                                },
+                                                                secondary: {
+                                                                    sx: { color: 'text.green' },
+                                                                },
+                                                            }}
+                                                        />
+                                                        <Stack direction="row" alignItems="center" spacing={1}>
+                                                            <Button
+                                                                onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
+                                                                disabled={item.quantity <= 1}
+                                                            >
+                                                                -
+                                                            </Button>
+                                                            <TextField
+                                                                size="small"
+                                                                value={item.quantity}
+                                                                sx={{ width: 50 }}
+                                                                inputProps={{ readOnly: true, style: { textAlign: 'center' } }}
+                                                            />
+                                                            <Button onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}>+</Button>
+                                                        </Stack>
+                                                        <Typography sx={{ ml: 2 , color: 'text.dark' }}>
+                                                            ${(item.price * item.quantity).toFixed(2)}
+                                                        </Typography>
+                                                        <Button onClick={() => handleRemove(item.id)} color="error" sx={{ ml: 2 }}>
+                                                            <CancelIcon/>
+                                                        </Button>
+                                                    </ListItem>
+                                                </Collapse>
+                                            ))}
+                                        </List>
+                                    )}
                                 </Box>
-                            ) : (
-                                <List>
-                                    {cartItems.map((item) => (
-                                        <Collapse key={item.id} in={true} timeout={400}>
-                                            <ListItem alignItems="flex-start" sx={{ mb: 2 }}>
-                                                <ListItemAvatar>
-                                                    <Avatar
-                                                        variant="rounded"
-                                                        src={item.imageUrl}
-                                                        sx={{ width: 80, height: 80, mr: 2 }}
-                                                    />
-                                                </ListItemAvatar>
-                                                <ListItemText
-                                                    primary={item.name}
-                                                    secondary={`$${item.price.toFixed(2)} each`}
-                                                />
-                                                <Stack direction="row" alignItems="center" spacing={1}>
-                                                    <Button
-                                                        onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
-                                                        disabled={item.quantity <= 1}
-                                                    >
-                                                        -
-                                                    </Button>
-                                                    <TextField
-                                                        size="small"
-                                                        value={item.quantity}
-                                                        sx={{ width: 50 }}
-                                                        inputProps={{ readOnly: true, style: { textAlign: 'center' } }}
-                                                    />
-                                                    <Button onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}>+</Button>
-                                                </Stack>
-                                                <Typography sx={{ ml: 2 }}>
-                                                    ${(item.price * item.quantity).toFixed(2)}
-                                                </Typography>
-                                                <Button onClick={() => handleRemove(item.id)} color="error" sx={{ ml: 2 }}>
-                                                    Remove
-                                                </Button>
-                                            </ListItem>
-                                        </Collapse>
-                                    ))}
-                                </List>
-                            )}
-                        </CardContent>
-                    </Card>
-                </Grid>
+                            </Box>
+                        </Box>
+                        <Box sx={{width: "30%", backgroundColor: "background.lime", display: "flex", alignItems: "center", justifyContent: "center",
+                            borderBottomRightRadius:4, borderTopRightRadius:4}}>
+                            <Box sx={{borderBottomRightRadius:4, borderTopRightRadius:4}}>
+                                <Typography variant="h6" sx={{color: 'text.primary', fontWeight: 'bold'}}>Order Summary</Typography>
+                                <Divider sx={{ my: 2 }} />
+                                <Typography>Subtotal: ${subtotal.toFixed(2)}</Typography>
+                                <Typography>Tax (10%): ${tax.toFixed(2)}</Typography>
+                                <Typography variant="h6" sx={{ mt: 2 }}>
+                                    Total: ${totalPrice.toFixed(2)}
+                                </Typography>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth
+                                    sx={{ mt: 3 }}
+                                    onClick={onCheckout}
+                                    disabled={cartItems.length === 0}
+                                >
+                                    Proceed to Checkout
+                                </Button>
+                            </Box>
+                        </Box>
+                    </Stack>
+                </Box>
 
-                {/* Order Summary */}
-                <Grid item xs={12} md={4}>
-                    <Card>
-                        <CardContent>
-                            <Typography variant="h6">Order Summary</Typography>
-                            <Divider sx={{ my: 2 }} />
-                            <Typography>Subtotal: ${subtotal.toFixed(2)}</Typography>
-                            <Typography>Tax (10%): ${tax.toFixed(2)}</Typography>
-                            <Typography variant="h6" sx={{ mt: 2 }}>
-                                Total: ${totalPrice.toFixed(2)}
-                            </Typography>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                fullWidth
-                                sx={{ mt: 3 }}
-                                onClick={onCheckout}
-                                disabled={cartItems.length === 0}
-                            >
-                                Proceed to Checkout
-                            </Button>
-                        </CardContent>
-                    </Card>
-                </Grid>
-            </Grid>
 
             <Snackbar
                 open={snackbar.open}

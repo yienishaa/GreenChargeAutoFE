@@ -1,7 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
 
 import logo from "../images/logo.webp";
-import basket from "../images/basket.svg"
+import { useCart } from '../context/CartContext';
+import { IconButton, Badge } from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 
 const navLinks = [
@@ -16,6 +18,7 @@ const loggedIn = false;
 
 function Navbar() {
   const path = useLocation().pathname;
+    const { totalQuantity } = useCart();
 
   return (
     <div className="bg-gradient-to-b text-white from-lime-600 to-transparent via-70% via-lime-600 px-5 justify-between flex fixed w-full z-10">
@@ -33,7 +36,11 @@ function Navbar() {
       </ul>
       <div className="flex items-center gap-x-10">
         <Link to={`/cart/${cartId}`}>
-          <img src={basket} width={50} height={50} alt="cart" className="hover:brightness-110" />
+            <IconButton>
+                <Badge color="secondary" badgeContent={totalQuantity}>
+                    <ShoppingCartIcon />
+                </Badge>
+            </IconButton>
         </Link>
         <Link to={loggedIn ? "/signout" : "/signin"}>
         <button className="border-2 px-3 py-1 rounded-lg border-white hover:brightness-90 ">

@@ -7,7 +7,7 @@ const UploadForm = () => {
     const [model, setModel] = useState("");
     const [description, setDescription] = useState("");
     const [mileage, setMileage] = useState("");
-    const [manufactured_year, setManufactured_year] = useState("");
+    const [year, setYear] = useState("");
     const [hasBeenInAccident, setHasBeenInAccident] = useState("");
     const [price, setPrice] = useState("");
     const [quantity, setQuantity] = useState("");
@@ -22,7 +22,7 @@ const UploadForm = () => {
         formData.append("model", model);
         formData.append("description", description);
         formData.append("mileage", mileage);
-        formData.append("manufactured_year", manufactured_year);
+        formData.append("manufactured_year", year);
         formData.append("hasBeenInAccident", hasBeenInAccident);
         formData.append("price", price);
         formData.append("quantity", quantity);
@@ -51,7 +51,7 @@ const UploadForm = () => {
 
     return (
         <>
-            <Box className="flex justify-center" >
+            <Box className="flex justify-center pt-24 px-4">
                 <Typography ml={15} mr={15} variant={"h3"}>Upload Vehicle Data</Typography>
             </Box>
 
@@ -65,8 +65,8 @@ const UploadForm = () => {
                     <TextField id="filled-basic" label="brand" variant="filled" placeholder="brand" onChange={(e) => setBrand(e.target.value)} />
                     <TextField id="filled-basic" label="model" variant="filled" placeholder="model" onChange={(e) => setModel(e.target.value)} />
                     <TextField id="filled-basic" label="description" variant="filled" placeholder="description" onChange={(e) => setDescription(e.target.value)} />
-                    <TextField type="number" placeholder="mileage" onChange={(e) => setMileage(e.target.value)} />
-                    <TextField type="date" placeholder="manufactured_year" onChange={(e) => setManufactured_year(e.target.value)} />
+                    <TextField inputMode={"decimal"} placeholder="mileage" onChange={(e) => setMileage(e.target.value)} />
+                    <TextField type="number" value={year} placeholder="manufactured_year" onChange={(e) => setYear(e.target.value)} inputProps={{min: 2000, max: new Date().getFullYear()}}/>
                     <Checkbox placeholder="hasBeenInAccident" onChange={(e) => setHasBeenInAccident(e.target.value)} />
                     <TextField type="number" placeholder="price" onChange={(e) => setPrice(e.target.value)} />
                     <QuantityInput value={quantity} placeholder="quantity" onChange={setQuantity}/>

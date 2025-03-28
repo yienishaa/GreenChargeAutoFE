@@ -14,33 +14,34 @@ const Vehicles = () => {
     const fetchVehicles = async () => {
       try {
         const response = await axios.get("http://localhost:8080/vehicles");
-        setVehicles(response.data); // Assuming the response data is an array of vehicles
+        setVehicles(response.data); 
       } catch (e) {
         setError(e.message);
       } finally {
         setLoading(false);
       }
     };
-
+    
     fetchVehicles();
-  }, []); // Empty dependency array means this effect runs once on mount
+  }, []); 
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="pt-20">Loading...</div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="pt-20">Error: {error}</div>;
   }
 */
   return (
-    <>
-      <Grid container spacing={2}>
-        <Grid item>
-          <img src={logo}/>
-        </Grid>
-      </Grid>
-    </>
+    <div className="pt-20">
+      <h1 >Vehicles</h1>
+      <ul>
+        {vehicles.map((vehicle, index) => (
+          <li key={index}>{vehicle.name}</li> // Adjust this based on your vehicle object structure
+        ))}
+      </ul>
+    </div>
   );
 };
 

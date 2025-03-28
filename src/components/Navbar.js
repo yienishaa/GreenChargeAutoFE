@@ -2,8 +2,6 @@ import { Link, useLocation } from "react-router-dom";
 
 import logo from "../images/logo.webp";
 import basket from "../images/basket.svg"
-import { useState } from "react";
-import UploadForm from "../pages/UploadForm";
 
 
 const navLinks = [

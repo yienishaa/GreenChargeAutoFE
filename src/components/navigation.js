@@ -64,6 +64,7 @@ export default function NavTabs() {
                 <LinkTab label="Deals" href="/trash" />
                 <LinkTab label="Loan Calculator" href="/spam" />
                 <LinkTab label="UploadForm" href="/UploadForm" />
+
             </Tabs>
         </Box>
     );

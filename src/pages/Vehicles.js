@@ -63,8 +63,8 @@ const Vehicles = () => {
 
   return (
 
-    <div className="pt-28 justify-center flex w-full">
-      <ul className="grid grid-cols-3 px-5 gap-5 w-2/3">
+    <div className="pt-28 justify-center flex w-full pb-10">
+      <ul className="grid grid-cols-3 px-5 gap-5 w-5/6">
         {vehicles.map((vehicle) => (
           <li key={vehicle.vid}>
             <VehicleCard car={vehicle} />

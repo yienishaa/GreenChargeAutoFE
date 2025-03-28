@@ -2,12 +2,14 @@ import { Link, useLocation } from "react-router-dom";
 
 import logo from "../images/logo.webp";
 import { useState } from "react";
+import UploadForm from "../pages/UploadForm";
 
 
 const navLinks = [
   { label: "Home", link: "/" },
   { label: "Vehicles", link: "/vehicles" },
   { label: "Loan Calculator", link: "/loan" },
+  { label: "UploadForm", link: "/UploadForm" },
 ];
 
 const id=0;
@@ -18,6 +20,7 @@ function Navbar() {
   const [menu, showMenu] = useState(false);
 
   return (
+
     <div className="bg-gradient-to-b from-green-400 to-transparent via-70% via-green-300 px-5 justify-between flex fixed w-full z-10">
       <div className="flex-col flex items-center align-middle justify-center">
         <img src={logo} height={75} width={75} alt="logo" />
@@ -42,6 +45,7 @@ function Navbar() {
         </Link>
       </div>
     </div>
+
   );
 }
 

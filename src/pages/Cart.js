@@ -1,109 +1,95 @@
-//Cart with a list of items with image, qty, total, tax calculations
-//Ability to increase/decrease qty, remove items
 
-import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import {Box, Stack, TextField, Typography} from "@mui/material";
+import {Typography, Container, Grid,Button,Card, CardContent, List, ListItem, ListItemAvatar, Avatar, ListItemText, Stack, TextField, Divider } from "@mui/material";
+import { Collapse } from '@mui/material';
+import { Badge, IconButton } from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
+function Cart({ cartItems = [], onRemoveItem, onUpdateQuantity, onCheckout }) {
+    console.log('Cart Items:', cartItems);
+    const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const tax = subtotal * 0.1; // 10% tax
+    const totalPrice = subtotal + tax;
 
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 
-function Cart() {
     return (
-        <Box className="pt-28 px-10">
-            <Box
+        <Container sx={{ py: 16 }}>
+            <Typography variant="h4" gutterBottom>
+                Shopping Cart
+            </Typography>
 
-                sx={{
-                    border: 1,
-                    borderRadius: 4,
-                    borderColor: "secondary.gray",
-                }}
-            >
-                <Stack direction="row" spacing={0}>
-                    {/* Left Side - Form */}
-                    <Box sx={{ width: "70%", px: 4 }} pt={4} pb={6}>
-                        <TableContainer component={Paper}>
-                            <Table  aria-label="simple table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Product</TableCell>
-                                        <TableCell align="right">Price</TableCell>
-                                        <TableCell align="right">Qty</TableCell>
-                                        <TableCell align="right">Total</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {rows.map((row) => (
-                                        <TableRow
-                                            key={row.name}
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-                                            <TableCell component="th" scope="row">
-                                                {row.name}
-                                            </TableCell>
-                                            <TableCell align="right">{row.calories}</TableCell>
-                                            <TableCell align="right">{row.fat}</TableCell>
-                                            <TableCell align="right">{row.carbs}</TableCell>
+            <Grid container spacing={4}>
+                {/* Cart Items Section */}
+                <Grid item xs={12} md={8}>
+                    <Card>
+                        <CardContent>
+                            <List>
+                                {cartItems.map((item) => (
+                                    <Collapse key={item.id} in={true} timeout={500}>
+                                        <ListItem key={item.id} alignItems="flex-start" sx={{ mb: 2 }}>
+                                            <ListItemAvatar>
+                                                <Avatar
+                                                    variant="rounded"
+                                                    src={item.imageUrl}
+                                                    sx={{ width: 80, height: 80, mr: 2 }}
+                                                />
+                                            </ListItemAvatar>
+                                            <ListItemText
+                                                primary={item.name}
+                                                secondary={`$${item.price.toFixed(2)} each`}
+                                            />
+                                            <Stack direction="row" alignItems="center" spacing={1}>
+                                                <Button onClick={() => onUpdateQuantity(item.id, item.quantity - 1)} disabled={item.quantity <= 1}>-</Button>
+                                                <TextField
+                                                    size="small"
+                                                    value={item.quantity}
+                                                    sx={{ width: 50 }}
+                                                    inputProps={{ readOnly: true, style: { textAlign: 'center' } }}
+                                                />
+                                                <Button onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}>+</Button>
+                                            </Stack>
+                                            <Typography sx={{ ml: 2 }}>
+                                                ${(item.price * item.quantity).toFixed(2)}
+                                            </Typography>
+                                            <Button
+                                                onClick={() => onRemoveItem(item.id)}
+                                                color="error"
+                                                sx={{ ml: 2 }}
+                                            >
+                                                Remove
+                                            </Button>
+                                        </ListItem>
+                                    </Collapse>
+                                ))}
+                            </List>
+                        </CardContent>
+                    </Card>
+                </Grid>
 
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </Box>
-                    {/* Right Side - Green Box */}
-                    <Box
-                        sx={{
-                            width: "30%",
-                            backgroundColor: "background.lime",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-
-                        }}
-                    >
-                        <Stack direction="column" spacing={2}>
-                            <Typography color="text.primary" variant="body1">Cart Total</Typography>
-                                <TableContainer component={Paper}>
-                                    <Table  aria-label="simple table">
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableCell>Sub Total</TableCell>
-                                                <TableCell>$</TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            <TableRow>
-                                                <TableCell>Total</TableCell>
-                                                <TableCell>$</TableCell>
-                                            </TableRow>
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-
-                            <Typography color="text.primary" variant="body1">Calculate Shipping</Typography>
-
-                        </Stack>
-
-                    </Box>
-                </Stack>
-            </Box>
-        </Box>
+                {/* Order Summary */}
+                <Grid item xs={12} md={4}>
+                    <Card>
+                        <CardContent>
+                            <Typography variant="h6">Order Summary</Typography>
+                            <Divider sx={{ my: 2 }} />
+                            <Typography>Subtotal: ${subtotal.toFixed(2)}</Typography>
+                            <Typography>Tax (10%): ${tax.toFixed(2)}</Typography>
+                            <Typography variant="h6" sx={{ mt: 2 }}>
+                                Total: ${totalPrice.toFixed(2)}
+                            </Typography>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                fullWidth
+                                sx={{ mt: 3 }}
+                                onClick={onCheckout}
+                            >
+                                Proceed to Checkout
+                            </Button>
+                        </CardContent>
+                    </Card>
+                </Grid>
+            </Grid>
+        </Container>
     );
 }
 export default Cart;

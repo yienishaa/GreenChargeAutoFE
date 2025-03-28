@@ -5,6 +5,7 @@ import Vehicles from '../pages/Vehicles';
 import LoanCalculator from '../pages/LoanCalculator';
 import UploadForm from '../pages/UploadForm';
 import VehicleDetail from '../pages/VehicleDetail';
+import Cart from "../pages/Cart";
 
 const AppRoutes = () => {
     return (
@@ -14,6 +15,7 @@ const AppRoutes = () => {
             <Route path="/loan" element={<LoanCalculator />} />
             <Route path="/UploadForm" element={<UploadForm />} />
             <Route path="/vehicles/:id" element={<VehicleDetail />} />
+            <Route path="/cart/:id" element={<Cart />} />
         </Routes>
     );
 };

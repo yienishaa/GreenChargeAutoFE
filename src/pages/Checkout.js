@@ -25,6 +25,8 @@ function Checkout() {
         city: "",
         postalCode: "",
         creditCard: "",
+        expiry: "",
+        cvv: "",
     });
 
     const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
@@ -38,17 +40,16 @@ function Checkout() {
     };
 
     const handleSubmit = () => {
-        // Basic validation
         if (Object.values(shippingInfo).some(val => !val.trim())) {
             setSnackbar({ open: true, message: "Please fill all fields.", severity: "error" });
             return;
         }
 
-        onCheckout(); // Clear cart
+        onCheckout(); // clear cart
         setSnackbar({ open: true, message: "Order placed successfully!", severity: "success" });
 
         setTimeout(() => {
-            navigate("/"); // Redirect to home or success page
+            navigate("/"); // or /confirmation if you add a page
         }, 1500);
     };
 
@@ -70,6 +71,14 @@ function Checkout() {
                             <TextField fullWidth label="City" name="city" margin="normal" value={shippingInfo.city} onChange={handleChange} />
                             <TextField fullWidth label="Postal Code" name="postalCode" margin="normal" value={shippingInfo.postalCode} onChange={handleChange} />
                             <TextField fullWidth label="Credit Card Number" name="creditCard" margin="normal" value={shippingInfo.creditCard} onChange={handleChange} />
+                            <Grid container spacing={2}>
+                                <Grid item xs={6}>
+                                    <TextField fullWidth label="Expiry Date (MM/YY)" name="expiry" margin="normal" value={shippingInfo.expiry} onChange={handleChange} />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <TextField fullWidth label="CVV" name="cvv" margin="normal" value={shippingInfo.cvv} onChange={handleChange} />
+                                </Grid>
+                            </Grid>
                         </CardContent>
                     </Card>
                 </Grid>

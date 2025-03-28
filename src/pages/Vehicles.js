@@ -41,7 +41,6 @@ const Vehicles = () => {
       try {
         const response = await axios.get("http://localhost:8080/vehicles");
         setVehicles(response.data);
-        console.log(response.data);
       } catch (e) {
         setError(e.message);
       } finally {

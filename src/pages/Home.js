@@ -2,14 +2,17 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ArrowOutward from "@mui/icons-material/ArrowOutward";
 import CategoryCard from "../components/CategoryCard";
+import Slideshow from "../components/Slideshow"
 
 import suv from "../images/suv.avif";
 import sedan from "../images/sedan.webp";
 import hatchback from "../images/hatchback.jpg";
 import minivan from "../images/minivan.jpg";
 import coupe from "../images/coupe.avif";
-import loan from "../images/loan.png";
-import placeholder from "../images/placeholder.png";
+import loan from "../images/loan.jpeg";
+
+
+import axios from "axios";
 
 const Home = () => {
   const categories = [
@@ -20,10 +23,64 @@ const Home = () => {
     { image: coupe, category: "Coupe", span: "small" },
   ];
 
+  const feats = [
+    {
+          vid: 1,
+          brand: "Toyota",
+          description: "Help me I'm dying",
+          hasBeenInAccident: false,
+          manufacturedYear: 2004,
+          mileage: 192042.69,
+          model: "Prius",
+          price: 234567,
+          body: "hatchback",
+          quantity: 5,
+          image: "https://picsum.photos/1920/1080"
+        },
+        {
+          vid: 2,
+          brand: "Honda",
+          description: "This state of the art fully kitted loaded car is fabulous for road trips and is guaranteed not to blow up on you because that's totally legit.",
+          hasBeenInAccident: true,
+          manufacturedYear: 2004,
+          mileage: 192042.69,
+          model: "Odyssey",
+          price: 234567.9,
+          fuel: "diesel",
+          body: "minivan",
+          quantity: 0
+        },
+        {
+          vid: 3,
+          brand: "Madza",
+          description: "Help me I'm dying",
+          hasBeenInAccident: false,
+          manufacturedYear: 2004,
+          mileage: 192042.69,
+          model: "5",
+          price: 234567,
+          body: "hatchback",
+          quantity: 5,
+          image: "https://picsum.photos/1920/1200"
+        },
+        {
+          vid: 4,
+          brand: "Hyundai",
+          description: "This state of the art fully kitted loaded car is fabulous for road trips and is guaranteed not to blow up on you because that's totally legit.",
+          hasBeenInAccident: true,
+          manufacturedYear: 2004,
+          mileage: 192042.69,
+          model: "Gooniesus",
+          price: 234567.9,
+          fuel: "diesel",
+          body: "minivan",
+          quantity: 0
+        }
+  ]
   return (
     <div className="pb-10 w-full flex flex-col items-center justify-center gap-y-10">
       <section id="featured" className="w-full max-h-lvh flex relative overflow-y-hidden">
-        <img src={placeholder} alt="bmw" className="h-full aspect-video object-cover" />
+        <Slideshow featA={feats[0]} featB={feats[1]} featC={feats[2]} featD={feats[3]} />
       </section>
       <section id="type" className="w-2/3 grid grid-cols-6 items-end">
         <h1 className="text-4xl col-span-5 text-lime-700 font-semibold">Browse by Type</h1>
@@ -43,11 +100,11 @@ const Home = () => {
           ))}
         </div>
       </section>
-      <section id="loan" className="w-full px-20">
+      <section id="loan" className="flex px-20">
         <div className="bg-lime-100 rounded-xl justify-center grid grid-cols-2">
           <div
             id="left"
-            className="flex align-middle items-center justify-center text-lime-700"
+            className="flex align-middle items-center justify-center text-lime-700 py-5"
           >
             <div className="gap-y-5 flex flex-col w-2/3">
               <h1 className="text-4xl font-semibold">Auto Loan Calculator</h1>
@@ -63,7 +120,7 @@ const Home = () => {
             </div>
           </div>
           <div id="right">
-            <img src={loan} alt="loan" className="object-cover" />
+            <img src={loan} alt="loan" className="object-cover aspect-[4/3] h-full rounded-r-xl" />
           </div>
         </div>
       </section>

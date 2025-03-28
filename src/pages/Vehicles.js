@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import VehicleCard from "../components/VehicleCard";
 import axios from "axios";
-import Reviews from "../components/Reviews";
-import {Box, Grid, Typography} from "@mui/material";
-import {Image} from "@mui/icons-material";
-import logo from "../images/logo.webp";
+
 
 const Vehicles = () => {
   // Temporary vehicle testing list

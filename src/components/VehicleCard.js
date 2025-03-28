@@ -31,8 +31,8 @@ export default function VehicleCard({ car }) {
           <span>{car.model}</span>
         </h1>
         <h2>
-          {car.description.substring(0, 50)}
-          {car.description.length > 50 ? "..." : ""}
+          {car.description.substring(0, 45)}
+          {car.description.length > 45 ? "..." : ""}
         </h2>
         <div className="grid grid-cols-2 gap-2">
           <h2 className="flex gap-x-1">

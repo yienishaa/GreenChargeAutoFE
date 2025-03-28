@@ -26,7 +26,7 @@ const Home = () => {
         <img src={placeholder} alt="bmw" className="h-full object-center" />
       </section>
       <section id="type" className="w-2/3 grid grid-cols-6 items-end">
-        <h1 className="text-4xl col-span-5 text-lime-700">Browse by Type</h1>
+        <h1 className="text-4xl col-span-5 text-lime-700 font-semibold">Browse by Type</h1>
         <Link to="/vehicles" className="col-span-1 text-right flex justify-end">
           <button className="flex items-center text-lime-700 hover:text-lime-900">
             View All <ArrowOutward />
@@ -44,13 +44,13 @@ const Home = () => {
         </div>
       </section>
       <section id="loan" className="w-full px-20">
-        <div className="bg-lime-100 rounded-lg justify-center grid grid-cols-2">
+        <div className="bg-lime-100 rounded-xl justify-center grid grid-cols-2">
           <div
             id="left"
             className="flex align-middle items-center justify-center text-lime-700"
           >
             <div className="gap-y-5 flex flex-col w-2/3">
-              <h1 className="text-4xl">Auto Loan Calculator</h1>
+              <h1 className="text-4xl font-semibold">Auto Loan Calculator</h1>
               <h3 className="text-md">
                 Use this calculator to estimate monthly payments on your next
                 new or used auto loan.

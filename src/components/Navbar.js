@@ -3,12 +3,14 @@ import { Link, useLocation } from "react-router-dom";
 import logo from "../images/logo.webp";
 import basket from "../images/basket.svg"
 import { useState } from "react";
+import UploadForm from "../pages/UploadForm";
 
 
 const navLinks = [
   { label: "Home", link: "/" },
   { label: "Vehicles", link: "/vehicles" },
   { label: "Loan Calculator", link: "/loan" },
+  { label: "UploadForm", link: "/UploadForm" },
 ];
 
 const cartId = 0;
@@ -42,6 +44,7 @@ function Navbar() {
         </Link>
       </div>
     </div>
+
   );
 }
 

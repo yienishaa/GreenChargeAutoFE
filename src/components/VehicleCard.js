@@ -11,17 +11,17 @@ import { Link } from "react-router-dom";
 import { Divider } from "@mui/material";
 export default function VehicleCard({ car }) {
   return (
-    <div className="shadow-lg flex-col rounded-xl border-gray-300 border-2">
+    <div className="shadow-lg flex-col rounded-xl border-gray-300 border-2 h-full flex justify-between overflow-hidden">
       <div className="relative cursor-default">
         {car.hotDeal && (
-          <div className="rounded-full absolute bg-gradient-to-br from-lime-600 to-green-600 text-white px-5 py-3 top-5 left-5">
+          <div className="rounded-full absolute bg-gradient-to-br from-lime-600 to-green-600 text-white px-5 py-3 top-5 left-5 hover:bg-gradient-to-tl transition-all">
             Hot Deal!
           </div>
         )}
         <img
           src={car.image || placeholder}
           alt="placeholder"
-          className="aspect-[3/2] object-cover rounded-t-xl"
+          className="aspect-[3/2] object-cover "
         />
       </div>
       <div className="py-4 px-6 space-y-2 cursor-default">

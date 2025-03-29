@@ -1,18 +1,28 @@
 // src/pages/VehicleDetail.js
 
-import { Divider } from "@mui/material";
+import { Divider,
+        Snackbar,
+        Alert
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import placeholder from "../images/placeholder.png";
-import { AddCircle, AddShoppingCart, RemoveCircle } from "@mui/icons-material";
+import {  AddShoppingCart } from "@mui/icons-material";
 import Stars from "../components/Stars";
+import axios from "axios";
+import {useCart} from "../context/CartContext";
+
+
+
 const VehicleDetail = () => {
+  const { loadCartItems } = useCart();
   const { id } = useParams(); // Get the vehicle id from the URL
   const [vehicle, setVehicle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeColor, setActiveColor] = useState("");
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
   useEffect(() => {
     fetch(`http://localhost:8080/vehicles/${id}`)
@@ -73,7 +83,30 @@ const VehicleDetail = () => {
 
   const colorCounts = countColors(vehicle.colors);
 
-  const addToCart = () => {};
+  const addToCart = async (vehicle) => {
+    try{
+      setLoading(true);
+      const userId = 1;
+
+      const payload = {
+        vid: vehicle.vid,
+        userId: userId,
+        quantity: 1,
+      };
+
+      await axios.post(`http://localhost:8080/shopping-cart/add-to-cart`, payload);
+      setSnackbar({ open: true, message: "Item added to cart!", severity: "success" });
+      loadCartItems();
+
+    }catch(e){
+      console.log(e);
+      setSnackbar({ open: true, message: "Failed to add item", severity: "error" });
+    }finally {
+      setLoading(false); // stop loading
+    }
+
+  };
+
 
   return (
     <div className="h-screen pt-28 justify-center flex">
@@ -99,7 +132,7 @@ const VehicleDetail = () => {
         </h1>
         <div className="grid grid-cols-3 rounded-xl overflow-hidden">
           <img
-            src={vehicle.image || placeholder}
+            src={'https://greencharge-catalog.s3.us-east-1.amazonaws.com/'+vehicle.image || placeholder}
             alt="car"
             className="h-full object-cover col-span-2"
           />
@@ -171,13 +204,21 @@ const VehicleDetail = () => {
               </ul>
             </span>
             <button
+                disabled={loading}
               className="w-full py-3 bg-green-600 rounded-xl text-xl text-white hover:brightness-90 space-x-2 flex items-center justify-center"
-              onClick={() => averageRating(vehicle.reviews)}
+              //onClick={() => averageRating(vehicle.reviews)}
+                onClick={() => addToCart(vehicle)}
             >
-              <span>
-                <AddShoppingCart />
-              </span>
-              <span>Add to Cart</span>
+              {loading ? (
+                <span className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></span>
+              ) : (
+                  <>
+                    <span>
+                      <AddShoppingCart />
+                    </span>
+                    <span>Add to Cart</span>
+                  </>
+              )}
             </button>
           </div>
         </div>
@@ -203,6 +244,16 @@ const VehicleDetail = () => {
           </div>
         </div>
       </div>
+      <Snackbar
+          open={snackbar.open}
+          autoHideDuration={3000}
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert onClose={() => setSnackbar({ ...snackbar, open: false })} severity={snackbar.severity} sx={{ width: '100%' }}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

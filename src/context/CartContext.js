@@ -1,5 +1,5 @@
 // context/CartContext.js
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import axios from "axios";
 
 export const CartContext = createContext();
@@ -17,16 +17,30 @@ export const CartProvider = ({ children }) => {
         }
     };
 
-    const onRemoveItem = (id) => {
-        setCartItems((prev) => prev.filter((item) => item.id !== id));
+
+
+    const onRemoveItem = async (id) => {
+        try {
+            await axios.delete(`http://localhost:8080/shopping-cart/${id}/delete-item`);
+            setCartItems((prev)=> prev.filter(item => item.id !== id));
+            await loadCartItems();
+        } catch (error) {
+            console.error("Failed to delete item:", error);
+        }
     };
 
-    const onUpdateQuantity = (id, newQty) => {
-        setCartItems((prev) =>
-            prev.map((item) =>
-                item.id === id ? { ...item, quantity: Math.max(1, newQty) } : item
-            )
-        );
+    const onUpdateQuantity = async (id, newQty) => {
+        const payload = {
+            cartItemId: id,
+            quantity: newQty,
+        };
+        try {
+            await axios.put(`http://localhost:8080/shopping-cart/update-cart`, payload);
+            await loadCartItems();
+
+        }catch (error) {
+            console.error("Failed to update item:", error);
+        }
     };
 
     const onCheckout = () => {
@@ -34,6 +48,10 @@ export const CartProvider = ({ children }) => {
     };
 
     const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+    useEffect(() => {
+        loadCartItems();
+    }, []);
 
     return (
         <CartContext.Provider

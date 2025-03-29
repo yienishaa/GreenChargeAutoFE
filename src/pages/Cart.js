@@ -40,10 +40,11 @@ function Cart() {
     };
 
     const handleRemove = (id) => {
+        console.log(cartItems);
         const item = cartItems.find((item) => item.id === id);
         if (item) {
             onRemoveItem(id);
-            setSnackbar({ open: true, message: `${item.name} removed`, severity: 'info' });
+            setSnackbar({ open: true, message: `${item.vehicleName} removed`, severity: 'info' });
         }
     };
 
@@ -110,7 +111,9 @@ function Cart() {
                                                                 sx={{ width: 50 }}
                                                                 inputProps={{ readOnly: true, style: { textAlign: 'center' } }}
                                                             />
-                                                            <Button onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}>+</Button>
+                                                            <Button onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}>
+                                                                +
+                                                            </Button>
                                                         </Stack>
                                                         <Typography sx={{ ml: 2 , color: 'text.dark' }}>
                                                             ${(item.price * item.quantity).toFixed(2)}

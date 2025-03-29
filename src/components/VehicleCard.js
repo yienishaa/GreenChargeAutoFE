@@ -19,7 +19,7 @@ export default function VehicleCard({ car }) {
           </div>
         )}
         <img
-          src={car.image || placeholder}
+          src={`https://greencharge-catalog.s3.us-east-1.amazonaws.com/`+car.image || placeholder}
           alt="placeholder"
           className="aspect-[3/2] object-cover "
         />

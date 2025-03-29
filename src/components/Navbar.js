@@ -23,14 +23,14 @@ function Navbar() {
   return (
     <div className="bg-gradient-to-b text-white from-lime-600 to-transparent via-70% via-lime-600 px-5 justify-between flex fixed w-full z-10">
       <div className="flex-col flex items-center align-middle justify-center">
-        <img src={logo} height={75} width={75} alt="logo" />
+        <img src={logo} height={70} width={70} alt="logo" />
         <h1 className="font-serif -translate-y-4">green charge auto</h1>
       </div>
 
-      <ul className="gap-x-5 flex items-end mb-5">
+      <ul className="gap-x-8 flex items-end mb-7">
         {navLinks.map((link) => (
-          <li key={link.label} className=" hover:brightness-75">
-            <Link to={link.link}>{link.label}</Link>
+          <li key={link.label} className="px-3 py-1 rounded-md hover:bg-gray-100 hover:bg-opacity-50 hover:brightness-75 hover:text-emerald-950 transition-colors duration-200">
+            <Link className="font-sans font-light" to={link.link}>{link.label}</Link>
           </li>
         ))}
       </ul>

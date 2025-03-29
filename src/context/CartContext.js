@@ -1,25 +1,21 @@
 // context/CartContext.js
 import { createContext, useContext, useState } from 'react';
+import axios from "axios";
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-    const [cartItems, setCartItems] = useState([
-        {
-            id: 1,
-            name: 'Toyota Corolla 2021',
-            price: 18000,
-            quantity: 1,
-            imageUrl: 'https://via.placeholder.com/100x60?text=Toyota',
-        },
-        {
-            id: 2,
-            name: 'Honda Civic 2022',
-            price: 22000,
-            quantity: 2,
-            imageUrl: 'https://via.placeholder.com/100x60?text=Honda',
-        },
-    ]);
+    const [cartItems, setCartItems] = useState([]);
+
+    const loadCartItems = async () => {
+        try {
+            const response = await axios.get("http://localhost:8080/shopping-cart/1");
+            setCartItems(response.data); // make sure this matches your backend response
+            console.log(response.data);
+        } catch (error) {
+            console.error("Failed to load cart items:", error);
+        }
+    };
 
     const onRemoveItem = (id) => {
         setCartItems((prev) => prev.filter((item) => item.id !== id));
@@ -41,7 +37,7 @@ export const CartProvider = ({ children }) => {
 
     return (
         <CartContext.Provider
-            value={{ cartItems, onRemoveItem, onUpdateQuantity, onCheckout, totalQuantity }}
+            value={{ cartItems, onRemoveItem, onUpdateQuantity, onCheckout, totalQuantity, loadCartItems }}
         >
             {children}
         </CartContext.Provider>

@@ -4,6 +4,8 @@ import {
     Container,
     Grid,
     Button,
+    Card,
+    CardContent,
     List,
     ListItem,
     ListItemAvatar,
@@ -14,7 +16,7 @@ import {
     Box,
     Collapse,
     Snackbar,
-    Alert
+    Alert, colors
 } from "@mui/material";
 
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -23,11 +25,10 @@ import Divider from '@mui/material/Divider';
 
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import React, {useEffect, useState} from "react";
-import axios from "axios";
+import { useState } from "react";
 
 function Cart() {
-    const { cartItems, onRemoveItem, onUpdateQuantity, onCheckout, loadCartItems } = useCart();
+    const { cartItems, onRemoveItem, onUpdateQuantity, onCheckout } = useCart();
     const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
     const navigate = useNavigate();
 
@@ -47,14 +48,6 @@ function Cart() {
         }
     };
 
-    useEffect(() => {
-        loadCartItems();
-
-    }, []);
-
-    useEffect(() => {
-        console.log("Cart items loaded:", cartItems);
-    }, [cartItems]);
 
     return (
         <Container sx={{ py: 16 }}>
@@ -73,20 +66,18 @@ function Cart() {
                                         </Box>
                                     ) : (
                                         <List>
-                                            {cartItems.map((item, index) => (
-                                                <Collapse key={`${item.id}-${index}`} in={true} timeout={400}>
-                                                <ListItem alignItems="flex-start" sx={{ mb: 2 }}>
+                                            {cartItems.map((item) => (
+                                                <Collapse key={item.id} in={true} timeout={400}>
+                                                    <ListItem alignItems="flex-start" sx={{ mb: 2 }}>
                                                         <ListItemAvatar>
                                                             <Avatar
                                                                 variant="rounded"
-
-                                                                src={`https://greencharge-catalog.s3.us-east-1.amazonaws.com/${item.imageUrl}`}
-
-                                                                sx={{ width: 180, height: 100, mr: 2 }}
+                                                                src={item.imageUrl}
+                                                                sx={{ width: 80, height: 80, mr: 2 }}
                                                             />
                                                         </ListItemAvatar>
                                                         <ListItemText
-                                                            primary={item.vehicleName}
+                                                            primary={item.name}
                                                             secondary={`$${item.price.toFixed(2)} each`}
                                                             slotProps={{
                                                                 primary: {
@@ -127,7 +118,7 @@ function Cart() {
                             </Box>
                         </Box>
                         <Box sx={{width: "30%", backgroundColor: "background.lime", display: "flex", alignItems: "center", justifyContent: "center",
-                            borderBottomRightRadius:4, borderTopRightRadius:4}}>
+                            borderBottomRightRadius:4, borderTopRightRadius:4, py: 4}}>
                             <Box sx={{borderBottomRightRadius:4, borderTopRightRadius:4}}>
                                 <Typography variant="h6" sx={{color: 'text.primary', fontWeight: 'bold'}}>Order Summary</Typography>
                                 <Divider sx={{ my: 2 }} />

@@ -23,17 +23,24 @@ export const CartProvider = ({ children }) => {
         try {
             await axios.delete(`http://localhost:8080/shopping-cart/${id}/delete-item`);
             setCartItems((prev)=> prev.filter(item => item.id !== id));
+            await loadCartItems();
         } catch (error) {
             console.error("Failed to delete item:", error);
         }
     };
 
-    const onUpdateQuantity = (id, newQty) => {
-        setCartItems((prev) =>
-            prev.map((item) =>
-                item.id === id ? { ...item, quantity: Math.max(1, newQty) } : item
-            )
-        );
+    const onUpdateQuantity = async (id, newQty) => {
+        const payload = {
+            cartItemId: id,
+            quantity: newQty,
+        };
+        try {
+            await axios.put(`http://localhost:8080/shopping-cart/update-cart`, payload);
+            await loadCartItems();
+
+        }catch (error) {
+            console.error("Failed to update item:", error);
+        }
     };
 
     const onCheckout = () => {

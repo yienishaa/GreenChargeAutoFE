@@ -18,6 +18,8 @@ import {
 } from "@mui/material";
 
 import CancelIcon from '@mui/icons-material/Cancel';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
 import Divider from '@mui/material/Divider';
 
 
@@ -47,6 +49,17 @@ function Cart() {
             setSnackbar({ open: true, message: `${item.vehicleName} removed`, severity: 'info' });
         }
     };
+
+    const handleUpdateCart = (item, command) => {
+
+        if(command === "reduce") {
+            onUpdateQuantity(item.id, item.quantity - 1);
+        }
+        else if(command === "increase") {
+            onUpdateQuantity(item.id, item.quantity + 1);
+        }
+
+    }
 
     useEffect(() => {
         loadCartItems();
@@ -100,10 +113,9 @@ function Cart() {
                                                         />
                                                         <Stack direction="row" alignItems="center" spacing={1}>
                                                             <Button
-                                                                onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
+                                                                onClick={() => handleUpdateCart(item, "reduce")}
                                                                 disabled={item.quantity <= 1}
-                                                            >
-                                                                -
+                                                            ><RemoveIcon fontSize="small" />
                                                             </Button>
                                                             <TextField
                                                                 size="small"
@@ -111,8 +123,8 @@ function Cart() {
                                                                 sx={{ width: 50 }}
                                                                 inputProps={{ readOnly: true, style: { textAlign: 'center' } }}
                                                             />
-                                                            <Button onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}>
-                                                                +
+                                                            <Button onClick={() => handleUpdateCart(item, "increase")}>
+                                                                <AddIcon fontSize="small" />
                                                             </Button>
                                                         </Stack>
                                                         <Typography sx={{ ml: 2 , color: 'text.dark' }}>

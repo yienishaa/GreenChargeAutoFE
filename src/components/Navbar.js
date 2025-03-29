@@ -29,7 +29,7 @@ function Navbar() {
 
       <ul className="gap-x-5 flex items-end mb-5">
         {navLinks.map((link) => (
-          <li className=" hover:brightness-75">
+          <li key={link.label} className=" hover:brightness-75">
             <Link to={link.link}>{link.label}</Link>
           </li>
         ))}

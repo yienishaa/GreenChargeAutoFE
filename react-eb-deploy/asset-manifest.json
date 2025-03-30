@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/static/css/main.c14dd890.css",
+    "main.js": "/static/js/main.c7f17df7.js",
+    "static/js/453.53fcedf1.chunk.js": "/static/js/453.53fcedf1.chunk.js",
+    "static/media/suv.avif": "/static/media/suv.513b2c4015ff0c97be9d.avif",
+    "static/media/minivan.jpg": "/static/media/minivan.3f06c0c3bdd102d5edd2.jpg",
+    "static/media/coupe.avif": "/static/media/coupe.e0dc24b20705a70c7556.avif",
+    "static/media/hatchback.jpg": "/static/media/hatchback.f8ee681fca66537be1a7.jpg",
+    "static/media/sedan.webp": "/static/media/sedan.a7699a0a4a88ab946eab.webp",
+    "static/media/loan.jpeg": "/static/media/loan.f0c630c780a263e3314f.jpeg",
+    "static/media/placeholder.png": "/static/media/placeholder.e8e5be6475f2da4ab867.png",
+    "static/media/logo.webp": "/static/media/logo.0ea00d2ffa5834cdd2b3.webp",
+    "index.html": "/index.html",
+    "main.c14dd890.css.map": "/static/css/main.c14dd890.css.map",
+    "main.c7f17df7.js.map": "/static/js/main.c7f17df7.js.map",
+    "453.53fcedf1.chunk.js.map": "/static/js/453.53fcedf1.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c14dd890.css",
+    "static/js/main.c7f17df7.js"
+  ]
+}

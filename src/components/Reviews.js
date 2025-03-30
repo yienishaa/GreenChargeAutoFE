@@ -1,72 +1,86 @@
 //Write reviews on vehicles and rate vehicles using five stars
-
-import { styled } from '@mui/material/styles';
-import {Avatar, Box, colors, Divider, Grid, Stack, Typography} from "@mui/material";
-import StarIcon from '@mui/icons-material/Star';
-import StarOutlineIcon from '@mui/icons-material/StarOutline';
-
-const GlobalStarIcon = styled(StarIcon)(({ theme }) => ({
-    color: 'gold',
-    fontSize: '32px',
-}));
-
-const GlobalStarOutlineIcon = styled(StarOutlineIcon)(({ theme }) => ({
-    color: 'gold',
-    fontSize: '32px',
-}));
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import {Box, Button, Divider, Rating, Stack, Typography} from "@mui/material";
+import TextField from '@mui/material/TextField';
+import ArrowOutward from "@mui/icons-material/ArrowOutward";
 
 
-const reviews = () => {
+
+const Reviews = () => {
+    const [value, setValue] = React.useState(2);
+    const [author, setAuthor] = useState("");
+    const [description, setDescription] = useState("");
+    const { id } = useParams();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const reviewPayload = {
+            vid:  parseInt(id),
+            stars: value,
+            content: description,
+            author
+        };
+
+
+        try {
+            const res = await fetch("http://localhost:8080/reviews/save-review", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(reviewPayload),
+            });
+
+            if (!res.ok) {
+                const errorText = await res.text();
+                console.error("Server error:", res.status, errorText);
+                alert("Failed to save review");
+            } else {
+                alert("Review successfully saved");
+            }
+        } catch (err) {
+            console.error("Fetch error:", err);
+            alert("Network error");
+        }
+
+    };
+
     return (
         <>
+            <Divider />
             <Box >
                 <Stack spacing={2}>
-                    <Typography variant="h3" color="primary">Reviews</Typography>
-                    <Typography variant="h6" color="text.secondary">Overall Rating</Typography>
-
-                    <Grid>
-                        <Grid size={12}>
-                            <Stack direction={"row"} spacing={2}>
-                                <GlobalStarIcon/>
-                                <GlobalStarIcon/>
-                                <GlobalStarIcon/>
-                                <GlobalStarIcon/>
-                                <GlobalStarOutlineIcon/>
+                    <Typography variant="h5" color="primary">Add Your Review</Typography>
+                    <Box pt={3} pb={24}>
+                        <form onSubmit={handleSubmit}>
+                            <Stack direction="column" spacing={2}>
+                                <Rating
+                                    label="stars"
+                                    name="simple-controlled"
+                                    value={value}
+                                    onChange={(event, newValue) => {
+                                        setValue(newValue);
+                                    }}
+                                />
+                                <TextField
+                                    id="standard-basic"
+                                    label="author"
+                                    variant="standard"
+                                    onChange={(e) => setAuthor(e.target.value)}
+                                />
+                                <TextField
+                                    id="filled-multiline-static"
+                                    label="description"
+                                    multiline
+                                    rows={4}
+                                    variant="filled"
+                                    onChange={(e) => setDescription(e.target.value)}
+                                />
+                                <Button variant="contained" color={"primary"} type="submit">Add Comment <ArrowOutward /></Button>
                             </Stack>
-                        </Grid>
-                    </Grid>
-                    <Typography variant="h4" color="primary">4.5</Typography>
-                    <Typography variant="h6" color="primary">Out of 5</Typography>
-                    <Box >
-                        <Stack direction={"row"} spacing={3} mt={4}>
-                            <Avatar/> <Typography variant="h6">Name</Typography><Typography variant="h6">Date</Typography>
-                        </Stack>
-                        <Grid mt={2}>
-                            <Grid size={12}>
-                                <Stack direction={"row"} spacing={2}>
-                                    <GlobalStarIcon/>
-                                    <GlobalStarIcon/>
-                                    <GlobalStarIcon/>
-                                    <GlobalStarIcon/>
-                                    <GlobalStarOutlineIcon/>
-                                </Stack>
-                            </Grid>
-                            <Grid mt={2} container size={6}>
-                                <Typography variant={"body1"} color="text.primary" mt={2}>
-                                    some text of the comments here ome text o
-                                    f the comments here ome text of the comments here
-                                    some text of the comments here ome text o
-                                    f the comments here ome text of the comments here
-                                    some text of the comments here ome text o
-                                    f the comments here ome text of the comments here
-                                    some text of the comments here ome text o
-                                    f the comments here ome text of the comments here
-                                </Typography>
-
-                            </Grid>
-                            <Grid container size={6}></Grid>
-                        </Grid>
-
+                        </form>
                     </Box>
                 </Stack>
             </Box>
@@ -75,4 +89,4 @@ const reviews = () => {
     );
 };
 
-export default reviews;
+export default Reviews;

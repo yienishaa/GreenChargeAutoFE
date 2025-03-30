@@ -7,6 +7,7 @@ const theme = createTheme({
             main: '#65a30d', // Replace with your desired primary color
             light: '#b0ca8b',
             white: '#fff',
+
         },
         secondary: {
             main: '#0b786c', // Replace with your desired secondary color
@@ -25,6 +26,9 @@ const theme = createTheme({
             dark: '#0b786c',
             green: '#69950f',
         },
+        review:{
+            default: 'rgba(30,159,66,0.76)',
+        }
     },
     typography: {
         fontFamily: [

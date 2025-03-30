@@ -8,9 +8,34 @@ import {
 } from "@mui/material";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import React, { useState } from "react";
+import axios from "axios";
 
 const LoanCalculator = () => {
-    const [price, setPrice] = useState("");
+    const [loanData, setLoanData] = useState(null);
+    const [priceOfVehicle, setPriceOfVehicle] = useState("");
+    const [interestRate, setInterestRate] = useState("");
+    const [loanDuration, setLoanDuration] = useState("");
+    const [downPayment, setDownPayment] = useState("");
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const params = new URLSearchParams({
+                priceOfVehicle: priceOfVehicle,
+                downPayment: downPayment,
+                loanDuration: loanDuration,
+                interestRate: interestRate,
+                state: "ON",
+            });
+
+            const response = await axios.get(`http://localhost:8080/loan-calculator?${params.toString()}`);
+
+            setLoanData(await response.data);
+            console.log(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <Box className="pt-28 px-10">
@@ -37,45 +62,52 @@ const LoanCalculator = () => {
                         </Box>
 
                         <Box className="pt-10">
-                            <FormControl fullWidth required>
+                            <form onSubmit={handleSubmit}>
                                 <Stack spacing={4}>
                                     <Stack direction="row" spacing={2}>
                                         <TextField
+                                            id="priceOfVehicle"
                                             fullWidth
                                             type="number"
                                             label="Price ($)"
                                             variant="outlined"
-                                            onChange={(e) => setPrice(e.target.value)}
+                                            onChange={(e) => setPriceOfVehicle(e.target.value)}
                                         />
                                         <TextField
+                                            id="interestRate"
                                             fullWidth
                                             type="number"
                                             label="Interest Rate"
                                             variant="outlined"
+                                            onChange={(e) => setInterestRate(e.target.value)}
                                         />
                                     </Stack>
                                     <Stack direction="row" spacing={2}>
                                         <TextField
+                                            id="loanDuration"
                                             fullWidth
                                             type="number"
                                             label="Loan Term (year)"
                                             variant="outlined"
+                                            onChange={(e) => setLoanDuration(e.target.value)}
                                         />
                                         <TextField
+                                            id="downPayment"
                                             fullWidth
                                             type="number"
                                             label="Down Payment"
                                             variant="outlined"
+                                            onChange={(e) => setDownPayment(e.target.value)}
                                         />
                                     </Stack>
-                                    <Button variant="contained" type="submit" fullWidth>
+                                    <Button variant="contained" type="submit">
                                         <Typography color="white" mr={1}>
                                             Calculate
                                         </Typography>
                                         <ArrowOutwardIcon sx={{ color: "white" }} />
                                     </Button>
                                 </Stack>
-                            </FormControl>
+                            </form>
                         </Box>
                     </Box>
 
@@ -92,15 +124,14 @@ const LoanCalculator = () => {
                     >
                         <Stack direction="column" spacing={2}>
                             <Typography color="text.primary" variant="body1">Monthly Payment</Typography>
-                            <TextField disabled={true} color="text.primary" variant="filled" defaultValue={"$"}/>
+                            <TextField disabled={true} color={"text"} variant="filled"  value={loanData?.monthly_loan_payment ? `$${loanData.monthly_loan_payment}` : '$'}/>
 
                             <Typography color="text.primary" variant="body1">Total Interest</Typography>
-                            <TextField disabled={true} color="text.primary" variant="filled" defaultValue={"$"}/>
+                            <TextField disabled={true} color="text.primary" variant="filled" value={loanData?.monthly_loan_payment ? `$${loanData.monthly_loan_payment}` : '$'}/>
 
                             <Typography color="text.primary" variant="body1">Total Payment</Typography>
-                            <TextField disabled={true} color="text.primary" variant="filled" defaultValue={"$"}/>
+                            <TextField disabled={true} color="text.primary" variant="filled"  value={loanData?.monthly_loan_payment ? `$${loanData.monthly_loan_payment}` : '$'}/>
                         </Stack>
-
                     </Box>
                 </Stack>
             </Box>

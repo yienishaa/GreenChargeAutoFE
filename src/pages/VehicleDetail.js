@@ -1,17 +1,19 @@
 // src/pages/VehicleDetail.js
 
-import { Divider,
-        Snackbar,
-        Alert
+import {
+  Divider,
+  Snackbar,
+  Alert, Rating
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import placeholder from "../images/placeholder.png";
-import {  AddShoppingCart } from "@mui/icons-material";
+import {AddShoppingCart} from "@mui/icons-material";
 import Stars from "../components/Stars";
 import axios from "axios";
 import {useCart} from "../context/CartContext";
+import Reviews from "../components/Reviews";
 
 
 
@@ -23,6 +25,7 @@ const VehicleDetail = () => {
   const [error, setError] = useState(null);
   const [activeColor, setActiveColor] = useState("");
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
+
 
   useEffect(() => {
     fetch(`http://localhost:8080/vehicles/${id}`)
@@ -108,7 +111,10 @@ const VehicleDetail = () => {
   };
 
 
+
+
   return (
+
     <div className="h-screen pt-28 justify-center flex">
       <div className="w-2/3 space-y-5">
         <Divider variant="" textAlign="left" sx={{}}>
@@ -243,6 +249,7 @@ const VehicleDetail = () => {
             ))}
           </div>
         </div>
+        <Reviews vehicle={vehicle} />
       </div>
       <Snackbar
           open={snackbar.open}

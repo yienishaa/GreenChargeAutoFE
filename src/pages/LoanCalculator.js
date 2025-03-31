@@ -9,6 +9,7 @@ import {
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import React, { useState } from "react";
 import axios from "axios";
+import API from "../globals";
 
 const LoanCalculator = () => {
     const [loanData, setLoanData] = useState(null);
@@ -28,7 +29,7 @@ const LoanCalculator = () => {
                 state: "ON",
             });
 
-            const response = await axios.get(`http://localhost:8080/loan-calculator?${params.toString()}`);
+            const response = await axios.get(`${API.BASE_URL}/loan-calculator?${params.toString()}`);
 
             setLoanData(await response.data);
             console.log(response.data);

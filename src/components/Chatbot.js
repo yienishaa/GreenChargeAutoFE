@@ -7,6 +7,8 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import LoadingDots from "./LoadingDots";
 import { Link } from "react-router-dom";
+import API from "../globals";
+
 
 export default function Chatbot() {
   const [tooltip, showTooltip] = useState(false);
@@ -21,7 +23,7 @@ export default function Chatbot() {
 
   const startChat = async () => {
     setLoading(true);
-    fetch("http://localhost:8080/chatbot")
+    fetch(`${API.BASE_URL}/chatbot`)
       .then((response) => response.json())
       .then((data) => {
         setChatInteract(data);
@@ -41,7 +43,7 @@ export default function Chatbot() {
 
   const chatAsked = async (link) => {
     setLoading(true);
-    fetch(`http://localhost:8080/${link}`)
+    fetch(`${API.BASE_URL}/${link}`)
       .then((response) => response.json())
       .then((data) => {
         setChatInteract(data);
@@ -66,7 +68,7 @@ export default function Chatbot() {
       const url = `chatbot/order/${orderNumber}`;
       // You can use fetch or any other method to send the request
       console.log(`Sending request to: ${url}`);
-      fetch(`http://localhost:8080/${url}`)
+      fetch(`${API.BASE_URL}/${url}`)
         .then((response) => response.json())
         .then((data) => {
           setChatInteract(data);

@@ -127,11 +127,7 @@ const LoanCalculator = () => {
                             <Typography color="text.primary" variant="body1">Monthly Payment</Typography>
                             <TextField disabled={true} color={"text"} variant="filled"  value={loanData?.monthly_loan_payment ? `$${loanData.monthly_loan_payment}` : '$'}/>
 
-                            <Typography color="text.primary" variant="body1">Total Interest</Typography>
-                            <TextField disabled={true} color="text.primary" variant="filled" value={loanData?.monthly_loan_payment ? `$${loanData.monthly_loan_payment}` : '$'}/>
 
-                            <Typography color="text.primary" variant="body1">Total Payment</Typography>
-                            <TextField disabled={true} color="text.primary" variant="filled"  value={loanData?.monthly_loan_payment ? `$${loanData.monthly_loan_payment}` : '$'}/>
                         </Stack>
                     </Box>
                 </Stack>

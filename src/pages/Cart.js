@@ -61,6 +61,11 @@ function Cart() {
 
     }
 
+    const handleCheckout = () => {
+
+        navigate('/checkout');
+    };
+
     useEffect(() => {
         loadCartItems();
 
@@ -156,7 +161,7 @@ function Cart() {
                                     color="primary"
                                     fullWidth
                                     sx={{ mt: 3 }}
-                                    onClick={onCheckout}
+                                    onClick={handleCheckout}
                                     disabled={cartItems.length === 0}
                                 >
                                     Proceed to Checkout

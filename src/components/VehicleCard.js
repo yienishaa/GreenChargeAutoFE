@@ -12,7 +12,7 @@ import { Divider } from "@mui/material";
 import API from "../globals";
 
 
-export default function VehicleCard({ car }) {
+export default function VehicleCard({ vehicle }) {
   return (
     <div className="shadow-lg flex-col rounded-xl border-gray-300 border-2 h-full flex justify-between overflow-hidden">
       <div className="relative cursor-default">
@@ -22,7 +22,7 @@ export default function VehicleCard({ car }) {
           </div>
         )}
         <img
-          src={`${API.S3_BUCKET}/`+car.image || placeholder}
+          src={`${API.S3_BUCKET}/`+vehicle.image || placeholder}
           alt="placeholder"
           className="aspect-[3/2] object-cover "
         />

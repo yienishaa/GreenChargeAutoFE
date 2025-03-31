@@ -2,6 +2,7 @@ import { AddCircle, RemoveCircle } from "@mui/icons-material";
 import CompareCard from "../components/CompareCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import API from "../globals";
 
 export default function Compare() {
   const [vehicles, setVehicles] = useState([]); // Initialize as an empty array
@@ -24,7 +25,7 @@ export default function Compare() {
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/vehicles");
+        const response = await axios.get(`http://localhost:8080/vehicles`);
         const formatted = response.data.map(({ vid, ...rest }) => ({
           id: vid,
           ...rest,

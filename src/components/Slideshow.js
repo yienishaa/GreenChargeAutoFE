@@ -1,12 +1,44 @@
 import { motion, AnimatePresence } from "motion/react";
+import axios from "axios";
 import placeholder from "../images/placeholder.png";
 import { useState, useEffect, useCallback } from "react";
 import { Speed, CarCrash, NoCrash, ArrowOutward } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import API from "../globals";
 
-export default function Slideshow({ featA, featB, featC, featD }) {
-  const feats = [featA, featB, featC, featD];
+export default function Slideshow() {
+  const [feats, setFeats] = useState([]); // Correctly initialize feats as a state variable
   const [featNum, setFeatNum] = useState(0);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const responses = await Promise.all([
+          axios.get(`${API.BASE_URL}/vehicles/1`),
+          axios.get(`${API.BASE_URL}/vehicles/2`),
+          axios.get(`${API.BASE_URL}/vehicles/3`),
+          axios.get(`${API.BASE_URL}/vehicles/4`),
+        ]);
+        console.log(responses);
+        setFeats([
+          responses[0].data,
+          responses[1].data,
+          responses[2].data,
+          responses[3].data,
+        ]);
+      } catch (error) {
+        setError("Error fetching data. Please try again later.");
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const nextFeat = useCallback(() => {
     setFeatNum((featNum + 1) % feats.length);
   }, [featNum, feats.length]);
@@ -15,6 +47,7 @@ export default function Slideshow({ featA, featB, featC, featD }) {
     const interval = setInterval(nextFeat, 7000);
     return () => clearInterval(interval);
   }, [nextFeat]);
+
   return (
     <div className="relative overflow-hidden">
       <AnimatePresence mode="popLayout">
@@ -27,10 +60,10 @@ export default function Slideshow({ featA, featB, featC, featD }) {
           layout
         >
           <img
-            src={`https://greencharge-catalog.s3.us-east-1.amazonaws.com/${feats[featNum].image}` || placeholder}
+            src={`https://greencharge-catalog.s3.us-east-1.amazonaws.com/${feats[featNum]?.image || placeholder}`}
             width={1920}
             height={1080}
-            alt={feats[featNum].brand + " " + feats[featNum].model}
+            alt={feats[featNum]?.brand + " " + feats[featNum]?.model}
             className="object-cover aspect-video"
           />
           <div className="absolute inset-0 bg-lime-700 opacity-60" />
@@ -46,27 +79,27 @@ export default function Slideshow({ featA, featB, featC, featD }) {
           transition={{ mode: "tween", duration: 0.5 }}
           layout
         >
-          {feats[featNum].hotDeal && (
+          {feats[featNum]?.hotDeal && (
             <div className="rounded-full absolute bg-gradient-to-br from-orange-600 to-red-600 text-white px-5 py-3 -top-5 hover:bg-gradient-to-tl transition-all">
               Hot Deal!
             </div>
           )}
           <div>
-            <h2 className="text-3xl ">{feats[featNum].manufacturedYear}</h2>
+            <h2 className="text-3xl ">{feats[featNum]?.manufacturedYear}</h2>
             <h1 className="text-7xl ">
-              {feats[featNum].brand} {feats[featNum].model}
+              {feats[featNum]?.brand} {feats[featNum]?.model}
             </h1>
           </div>
           <h2 className="text-4xl">
             $
-            {feats[featNum].price.toLocaleString(undefined, {
+            {feats[featNum]?.price.toLocaleString(undefined, {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             })}
           </h2>
         </motion.div>
       </AnimatePresence>
-      <AnimatePresence method="wait">
+      <AnimatePresence method=" wait">
         <motion.div
           key={featNum}
           className="flex flex-col text-white space-y-10 bg-lime-300/50 absolute right-32 rounded-xl p-10 top-1/3 min-w-64 overflow-hidden"
@@ -86,11 +119,11 @@ export default function Slideshow({ featA, featB, featC, featD }) {
               exit={{ opacity: 0, y: 25 }}
               transition={{ mode: "tween", duration: 0.25, delay: 0.6 }}
             >
-              {feats[featNum].mileage.toLocaleString()} km
+              {feats[featNum]?.mileage.toLocaleString()} km
             </motion.h2>
           </span>
           <span className="space-y-2">
-            {feats[featNum].hasBeenInAccident ? (
+            {feats[featNum]?.hasBeenInAccident ? (
               <CarCrash sx={{ fontSize: "64px" }} />
             ) : (
               <NoCrash sx={{ fontSize: "64px" }} />
@@ -103,13 +136,13 @@ export default function Slideshow({ featA, featB, featC, featD }) {
               exit={{ opacity: 0, y: 25 }}
               transition={{ mode: "tween", duration: 0.25, delay: 0.7 }}
             >
-              {feats[featNum].hasBeenInAccident
+              {feats[featNum]?.hasBeenInAccident
                 ? "Accident Recorded"
                 : "No Accidents"}
             </motion.h2>
           </span>
           <Link
-            to={`/vehicles/${feats[featNum].vid}`}
+            to={`/vehicles/${feats[featNum]?.vid}`}
             className="flex justify-center items-center text-xl bg-lime-800 py-3 rounded-xl px-2 border-2 border-green-600 hover:brightness-90"
           >
             Learn More{" "}

@@ -27,7 +27,7 @@ export default function Slideshow({ featA, featB, featC, featD }) {
           layout
         >
           <img
-            src={feats[featNum].image || placeholder}
+            src={`https://greencharge-catalog.s3.us-east-1.amazonaws.com/${feats[featNum].image}` || placeholder}
             width={1920}
             height={1080}
             alt={feats[featNum].brand + " " + feats[featNum].model}

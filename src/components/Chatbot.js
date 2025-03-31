@@ -116,7 +116,7 @@ export default function Chatbot() {
         style={{ originX: 0.95, originY: 1.15 }}
         className="absolute bottom-24 flex flex-col right-5 bg-lime-100 rounded-xl w-[25svw] max-h-[70svh] shadow-lg"
       >
-        <div className="py-2 flex px-4 justify-between bg-lime-200 rounded-t-xl">
+        <div className="py-2 flex px-4 justify-between bg-lime-200 rounded-t-xl font-bold">
           Chatbot
           <Close
             className="cursor-pointer"
@@ -126,7 +126,7 @@ export default function Chatbot() {
         <div className="px-4 py-5 flex flex-col h-full gap-y-10 overflow-auto ">
           <div
             className={`flex gap-x-2 ${
-              loading ? "items-center" : "items-start"
+              loading ? "items-center" : "items-stretch"
             }`}
           >
             <SupportAgentRounded fontSize="large" />
@@ -157,7 +157,7 @@ export default function Chatbot() {
           <AnimatePresence>
             {!loading && (
               <motion.div
-                className="space-y-1 flex flex-col "
+                className="space-y-1 flex flex-col items-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -167,7 +167,7 @@ export default function Chatbot() {
                     option === "" ? (
                       <form
                         onSubmit={handleSubmit}
-                        className="items-center flex justify-center"
+                        className="items-center flex justify-between w-11/12"
                       >
                         <input
                           type="number"
@@ -175,7 +175,7 @@ export default function Chatbot() {
                           name="order"
                           placeholder="Order Number"
                           required
-                          className="rounded-full p-2 text-center"
+                          className="rounded-full p-2 w-full text-center"
                           value={orderNumber}
                           onChange={(e) => setOrderNumber(e.target.value)} // Update state on input change
                         />
@@ -191,7 +191,7 @@ export default function Chatbot() {
                         to="/loan"
                         key={link}
                         onClick={() => showChatWindow(false)}
-                        className="w-5/6 text-left p-2 bg-white rounded-full hover:brightness-90"
+                        className="w-11/12 text-left p-2 bg-white rounded-full hover:brightness-90"
                       >
                         {option}
                       </Link>
@@ -200,7 +200,7 @@ export default function Chatbot() {
                         to="/vehicles"
                         key={link}
                         onClick={() => showChatWindow(false)}
-                        className="w-5/6 text-left p-2 bg-white rounded-full hover:brightness-90"
+                        className="w-11/12 text-left p-2 bg-white rounded-full hover:brightness-90"
                       >
                         {option}
                       </Link>
@@ -208,7 +208,7 @@ export default function Chatbot() {
                       <button
                         key={link}
                         onClick={() => chatAsked(link)}
-                        className="w-5/6 text-left p-2 bg-white rounded-full hover:brightness-90"
+                        className="w-11/12 text-left p-2 bg-white rounded-full hover:brightness-90"
                       >
                         {option}
                       </button>

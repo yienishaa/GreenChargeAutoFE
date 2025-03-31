@@ -7,7 +7,7 @@ import Slideshow from "../components/Slideshow";
 import suv from "../images/suv.avif";
 import sedan from "../images/sedan.webp";
 import hatchback from "../images/hatchback.jpg";
-import minivan from "../images/minivan.jpg";
+import truck from "../images/truck.png";
 import coupe from "../images/coupe.avif";
 import loan from "../images/loan.jpeg";
 
@@ -49,7 +49,7 @@ const Home = () => {
     { image: suv, category: "SUV", span: "big" },
     { image: sedan, category: "Sedan", span: "big" },
     { image: hatchback, category: "Hatchback", span: "small" },
-    { image: minivan, category: "Minivan", span: "small" },
+    { image: truck, category: "Truck", span: "small" },
     { image: coupe, category: "Coupe", span: "small" },
   ];
 

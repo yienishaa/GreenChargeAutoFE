@@ -272,8 +272,8 @@ const Vehicles = () => {
           <div className=" justify-center flex w-full pb-10">
             <ul className="grid grid-cols-3 px-5 gap-5 w-5/6">
               {sortedVehicles.map((vehicle) => (
-                  <li key={vehicle.vid}>
-                    <VehicleCard car={vehicle} />
+                  <li key={vehicle.id}>
+                    <VehicleCard vehicle={vehicle} />
                   </li>
               ))}
             </ul>

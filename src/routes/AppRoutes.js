@@ -7,6 +7,7 @@ import UploadForm from '../pages/UploadForm';
 import VehicleDetail from '../pages/VehicleDetail';
 import Cart from "../pages/Cart";
 import Checkout from '../pages/Checkout';
+import Compare from '../pages/Compare';
 
 const AppRoutes = () => {
     return (
@@ -18,6 +19,7 @@ const AppRoutes = () => {
             <Route path="/vehicles/:id" element={<VehicleDetail />} />
             <Route path="/cart/:id" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/compare" element={<Compare />} />
         </Routes>
     );
 };

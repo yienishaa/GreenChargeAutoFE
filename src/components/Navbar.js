@@ -9,6 +9,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 const navLinks = [
   { label: "Home", link: "/" },
   { label: "Vehicles", link: "/vehicles" },
+  { label: "Compare", link: "/compare"},
   { label: "Loan Calculator", link: "/loan" },
   { label: "UploadForm", link: "/UploadForm" },
 ];

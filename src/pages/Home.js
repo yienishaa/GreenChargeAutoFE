@@ -7,68 +7,27 @@ import Slideshow from "../components/Slideshow";
 import suv from "../images/suv.avif";
 import sedan from "../images/sedan.webp";
 import hatchback from "../images/hatchback.jpg";
-import minivan from "../images/minivan.jpg";
+import truck from "../images/truck.png";
 import coupe from "../images/coupe.avif";
 import loan from "../images/loan.jpeg";
-import API from "../globals";
-import axios from "axios";
 
 const Home = () => {
-  const [vehicles, setVehicles] = useState({ featA: null, featB: null, featC: null, featD: null });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const responses = await Promise.all([
-          axios.get(`${API.BASE_URL}/vehicles/1`),
-          axios.get(`${API.BASE_URL}/vehicles/2`),
-          axios.get(`${API.BASE_URL}/vehicles/3`),
-          axios.get(`${API.BASE_URL}/vehicles/4`),
-        ]);
-
-        setVehicles({
-          featA: responses[0].data,
-          featB: responses[1].data,
-          featC: responses[2].data,
-          featD: responses[3].data,
-        });
-      } catch (error) {
-        setError("Error fetching data. Please try again later.");
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+  
   const categories = [
     { image: suv, category: "SUV", span: "big" },
     { image: sedan, category: "Sedan", span: "big" },
     { image: hatchback, category: "Hatchback", span: "small" },
-    { image: minivan, category: "Minivan", span: "small" },
+    { image: truck, category: "Truck", span: "small" },
     { image: coupe, category: "Coupe", span: "small" },
   ];
 
-  if (loading) {
-    return <div>Loading...</div>; // You can replace this with a spinner or loading component
-  }
-
-  if (error) {
-    return <div>{error}</div>; // Display error message
-  }
+ 
 
   return (
     <div className="pb-10 w-full flex flex-col items-center justify-center gap-y-10">
       <section id="featured" className="w-full max-h-lvh flex relative overflow-y-hidden">
         <Slideshow
-          featA={vehicles.featD}
-          featB={vehicles.featA}
-          featC={vehicles.featB}
-          featD={vehicles.featC}
+     
         />
       </section>
       <section id="type" className="w-2/3 grid grid-cols-6 items-end">

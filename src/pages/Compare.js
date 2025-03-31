@@ -25,7 +25,7 @@ export default function Compare() {
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/vehicles`);
+        const response = await axios.get(`${API.BASE_URL}/vehicles`);
         const formatted = response.data.map(({ vid, ...rest }) => ({
           id: vid,
           ...rest,

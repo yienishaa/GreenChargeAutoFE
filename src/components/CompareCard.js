@@ -5,9 +5,11 @@ import {
   MenuItem,
   Divider,
 } from "@mui/material";
-import { CarCrash, DirectionsCar, NoCrash, Speed } from "@mui/icons-material";
+import { CarCrash, DirectionsCar, NoCrash, Speed, ArrowOutward } from "@mui/icons-material";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Stars from "./Stars";
+import API from "../globals";
 
 export default function CompareCard({ vehicles }) {
   const [activeVehicle, setActiveVehicle] = useState(0.0);
@@ -16,7 +18,7 @@ export default function CompareCard({ vehicles }) {
 
   const updateVehicle = (id) => {
     setActiveVehicle(id);
-    fetch(`http://localhost:8080/vehicles/${id}`)
+    fetch(`${API.BASE_URL}/vehicles/${id}`)
       .then((response) => response.json())
       .then((data) => {
         setVehicle(data);
@@ -110,6 +112,12 @@ export default function CompareCard({ vehicles }) {
             <Speed />
             <span>{vehicle.mileage} km</span>
           </h2>
+          <Link
+          to={`/vehicles/${vehicle.vid}`}
+          className="flex text-blue-600 hover:text-blue-800"
+        >
+          View Car <ArrowOutward />
+        </Link>
         </div>
       )}
     </div>

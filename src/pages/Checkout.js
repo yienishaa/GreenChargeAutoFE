@@ -47,6 +47,7 @@ function Checkout() {
         }
 
         try {
+            console.log("cartItems:", cartItems);
             const payload = {
                 fname: shippingInfo.fullName.split(" ")[0] || shippingInfo.fullName,
                 lname: shippingInfo.fullName.split(" ")[1] || "",
@@ -56,24 +57,24 @@ function Checkout() {
                     postalCode: shippingInfo.postalCode
                 },
                 cart: cartItems.map(item => ({
-                    vid: item.vid,
+                    vid: item.id,
                     quantity: item.quantity
                 }))
             };
 
             const response = await axios.post("http://localhost:8080/orders/checkout", payload, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}` 
-                }
+                //headers: {
+                //    Authorization: `Bearer ${localStorage.getItem("token")}`
+                //}
             });
 
             console.log("Order placed:", response.data);
 
-            onCheckout(); 
+            onCheckout();
             setSnackbar({ open: true, message: "Order placed successfully!", severity: "success" });
 
             setTimeout(() => {
-                navigate("/"); 
+                navigate("/");
             }, 1500);
         } catch (error) {
             console.error("Checkout failed:", error);
@@ -86,7 +87,7 @@ function Checkout() {
     };
 
     return (
-        <Container maxWidth="md" sx={{ mt: 4 }}>
+        <Container maxWidth="md" sx={{ mt: 6 }}>
             <Typography variant="h4" gutterBottom>Checkout</Typography>
 
             <Grid container spacing={4}>

@@ -142,7 +142,7 @@ function Cart() {
                             </Box>
                         </Box>
                         <Box sx={{width: "30%", backgroundColor: "background.lime", display: "flex", alignItems: "center", justifyContent: "center",
-                            borderBottomRightRadius:4, borderTopRightRadius:4}}>
+                            borderBottomRightRadius:4, borderTopRightRadius:4, py:4}}>
                             <Box sx={{borderBottomRightRadius:4, borderTopRightRadius:4}}>
                                 <Typography variant="h6" sx={{color: 'text.primary', fontWeight: 'bold'}}>Order Summary</Typography>
                                 <Divider sx={{ my: 2 }} />

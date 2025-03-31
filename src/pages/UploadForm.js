@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {Box, Button, Checkbox, Stack, TextField, Typography} from "@mui/material";
 import QuantityInput from "../components/QuantityInput";
+import API from "../globals";
 
 const UploadForm = () => {
     const [brand, setBrand] = useState("");
@@ -30,7 +31,7 @@ const UploadForm = () => {
         formData.append("image", image);
 
         try {
-            const res = await fetch("http://localhost:8080/admin/products", {
+            const res = await fetch(`${API.BASE_URL}/admin/products`, {
                 method: "POST",
                 body: formData,
             });

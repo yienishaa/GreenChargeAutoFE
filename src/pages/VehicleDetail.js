@@ -14,7 +14,7 @@ import Stars from "../components/Stars";
 import axios from "axios";
 import {useCart} from "../context/CartContext";
 import Reviews from "../components/Reviews";
-
+import API from "../globals";
 
 
 const VehicleDetail = () => {
@@ -28,7 +28,7 @@ const VehicleDetail = () => {
 
 
   useEffect(() => {
-    fetch(`http://localhost:8080/vehicles/${id}`)
+    fetch(`${API.BASE_URL}/vehicles/${id}`)
       .then((response) => response.json())
       .then((data) => {
         setVehicle(data);
@@ -97,7 +97,7 @@ const VehicleDetail = () => {
         quantity: 1,
       };
 
-      await axios.post(`http://localhost:8080/shopping-cart/add-to-cart`, payload);
+      await axios.post(`${API.BASE_URL}/shopping-cart/add-to-cart`, payload);
       setSnackbar({ open: true, message: "Item added to cart!", severity: "success" });
       loadCartItems();
 
@@ -138,7 +138,7 @@ const VehicleDetail = () => {
         </h1>
         <div className="grid grid-cols-3 rounded-xl overflow-hidden">
           <img
-            src={'https://greencharge-catalog.s3.us-east-1.amazonaws.com/'+vehicle.image || placeholder}
+            src={`${API.S3_BUCKET}/`+vehicle.image || placeholder}
             alt="car"
             className="h-full object-cover col-span-2"
           />

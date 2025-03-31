@@ -9,7 +9,10 @@ import {
 import placeholder from "../images/placeholder.png";
 import { Link } from "react-router-dom";
 import { Divider } from "@mui/material";
-export default function VehicleCard({ vehicle }) {
+import API from "../globals";
+
+
+export default function VehicleCard({ car }) {
   return (
     <div className="shadow-lg flex-col rounded-xl border-gray-300 border-2 h-full flex justify-between overflow-hidden">
       <div className="relative cursor-default">
@@ -19,7 +22,7 @@ export default function VehicleCard({ vehicle }) {
           </div>
         )}
         <img
-          src={`https://greencharge-catalog.s3.us-east-1.amazonaws.com/`+vehicle.image || placeholder}
+          src={`${API.S3_BUCKET}/`+car.image || placeholder}
           alt="placeholder"
           className="aspect-[3/2] object-cover "
         />

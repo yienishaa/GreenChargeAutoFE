@@ -13,6 +13,7 @@ import {
 
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import API from "../globals";
 
 const Vehicles = () => {
   // Temporary vehicle testing list
@@ -105,7 +106,7 @@ const Vehicles = () => {
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/vehicles");
+        const response = await axios.get(`${API.BASE_URL}/vehicles`);
 
         // Convert API response to include `id` field for DataGrid
         const formatted = response.data.map(({ vid, ...rest }) => ({

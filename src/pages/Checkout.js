@@ -14,6 +14,7 @@ import {
 import { useState } from "react";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Checkout() {
     const { cartItems, onCheckout } = useCart();
@@ -39,18 +40,45 @@ function Checkout() {
         setShippingInfo({ ...shippingInfo, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (Object.values(shippingInfo).some(val => !val.trim())) {
             setSnackbar({ open: true, message: "Please fill all fields.", severity: "error" });
             return;
         }
 
-        onCheckout(); // clear cart
-        setSnackbar({ open: true, message: "Order placed successfully!", severity: "success" });
+        try {
+            const payload = {
+                fname: shippingInfo.fullName.split(" ")[0] || shippingInfo.fullName,
+                lname: shippingInfo.fullName.split(" ")[1] || "",
+                address: {
+                    street: shippingInfo.address,
+                    city: shippingInfo.city,
+                    postalCode: shippingInfo.postalCode
+                },
+                cart: cartItems.map(item => ({
+                    vid: item.vid,
+                    quantity: item.quantity
+                }))
+            };
 
-        setTimeout(() => {
-            navigate("/"); // or /confirmation if you add a page
-        }, 1500);
+            const response = await axios.post("http://localhost:8080/orders/checkout", payload, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}` 
+                }
+            });
+
+            console.log("Order placed:", response.data);
+
+            onCheckout(); 
+            setSnackbar({ open: true, message: "Order placed successfully!", severity: "success" });
+
+            setTimeout(() => {
+                navigate("/"); 
+            }, 1500);
+        } catch (error) {
+            console.error("Checkout failed:", error);
+            setSnackbar({ open: true, message: "Checkout failed. Try again.", severity: "error" });
+        }
     };
 
     const handleSnackbarClose = () => {

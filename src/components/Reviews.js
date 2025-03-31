@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import {Box, Button, Divider, Rating, Stack, Typography} from "@mui/material";
 import TextField from '@mui/material/TextField';
 import ArrowOutward from "@mui/icons-material/ArrowOutward";
-
+import API from "../globals";
 
 
 const Reviews = () => {
@@ -25,7 +25,7 @@ const Reviews = () => {
 
 
         try {
-            const res = await fetch("http://localhost:8080/reviews/save-review", {
+            const res = await fetch(`${API.BASE_URL}/reviews/save-review`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

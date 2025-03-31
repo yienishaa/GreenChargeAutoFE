@@ -1,6 +1,7 @@
 // context/CartContext.js
 import { createContext, useContext, useState, useEffect } from 'react';
 import axios from "axios";
+import API from "../globals";
 
 export const CartContext = createContext();
 
@@ -9,7 +10,7 @@ export const CartProvider = ({ children }) => {
 
     const loadCartItems = async () => {
         try {
-            const response = await axios.get("http://localhost:8080/shopping-cart/1");
+            const response = await axios.get(`${API.BASE_URL}/shopping-cart/1`);
             setCartItems(response.data); // make sure this matches your backend response
             console.log(response.data);
         } catch (error) {
@@ -21,7 +22,7 @@ export const CartProvider = ({ children }) => {
 
     const onRemoveItem = async (id) => {
         try {
-            await axios.delete(`http://localhost:8080/shopping-cart/${id}/delete-item`);
+            await axios.delete(`${API.BASE_URL}/shopping-cart/${id}/delete-item`);
             setCartItems((prev)=> prev.filter(item => item.id !== id));
             await loadCartItems();
         } catch (error) {
@@ -35,7 +36,7 @@ export const CartProvider = ({ children }) => {
             quantity: newQty,
         };
         try {
-            await axios.put(`http://localhost:8080/shopping-cart/update-cart`, payload);
+            await axios.put(`${API.BASE_URL}/shopping-cart/update-cart`, payload);
             await loadCartItems();
 
         }catch (error) {

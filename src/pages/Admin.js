@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {Box, Grid, Typography} from "@mui/material";
+import {Box, Grid} from "@mui/material";
+import API from "../globals";
 
 const Vehicles = () => {
     const [vehicles, setVehicles] = useState([]);
@@ -11,7 +12,7 @@ const Vehicles = () => {
         const fetchVehicles = async () => {
             try {
 
-                const response = await axios.get("http://localhost:8080/vehicles/admin/all");
+                const response = await axios.get(`${API.BASE_URL}/vehicles/admin/all`);
                 setVehicles(response.data); // Assuming the response data is an array of vehicles
 
             } catch (e) {
@@ -40,7 +41,7 @@ const Vehicles = () => {
                     {vehicles.map((v) => (
                         <li key={v.id}>
                             <strong>{v.brand} {v.model}</strong><br/>
-                            <img src={`https://greencharge-catalog.s3.us-east-1.amazonaws.com/${v.image}`}  />
+                            <img src={`${API.S3_BUCKET}/${v.image}`}  />
 
                         </li>
                     ))}

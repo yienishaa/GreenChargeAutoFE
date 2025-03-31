@@ -10,7 +10,7 @@ import hatchback from "../images/hatchback.jpg";
 import minivan from "../images/minivan.jpg";
 import coupe from "../images/coupe.avif";
 import loan from "../images/loan.jpeg";
-
+import API from "../globals";
 import axios from "axios";
 
 const Home = () => {
@@ -22,10 +22,10 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const responses = await Promise.all([
-          axios.get("http://localhost:8080/vehicles/1"),
-          axios.get("http://localhost:8080/vehicles/2"),
-          axios.get("http://localhost:8080/vehicles/3"),
-          axios.get("http://localhost:8080/vehicles/4"),
+          axios.get(`${API.BASE_URL}/vehicles/1`),
+          axios.get(`${API.BASE_URL}/vehicles/2`),
+          axios.get(`${API.BASE_URL}/vehicles/3`),
+          axios.get(`${API.BASE_URL}/vehicles/4`),
         ]);
 
         setVehicles({

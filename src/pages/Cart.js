@@ -26,7 +26,7 @@ import Divider from '@mui/material/Divider';
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import React, {useEffect, useState} from "react";
-import axios from "axios";
+import API from "../globals";
 
 function Cart() {
     const { cartItems, onRemoveItem, onUpdateQuantity, onCheckout, loadCartItems } = useCart();
@@ -94,7 +94,7 @@ function Cart() {
                                                             <Avatar
                                                                 variant="rounded"
 
-                                                                src={`https://greencharge-catalog.s3.us-east-1.amazonaws.com/${item.imageUrl}`}
+                                                                src={`${API.S3_BUCKET}/${item.imageUrl}`}
 
                                                                 sx={{ width: 180, height: 100, mr: 2 }}
                                                             />

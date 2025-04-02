@@ -9,16 +9,17 @@ import API from "../../globals";
 const SalesAnalytics = () => {
     const [monthlySales, setMonthlySales] = useState([]);
     const [vehicleTypeSales, setVehicleTypeSales] = useState([]);
-    const [profitTrend, setProfitTrend] = useState([]);
+    const [profitTrend, setProfitTrend] = useState({});
 
     useEffect(() => {
+        // Fetch Monthly Sales
         axios.get(`${API.BASE_URL}/dashboard/monthly`)
             .then(res => setMonthlySales(res.data))
             .catch(err => console.error('Monthly sales fetch failed:', err));
 
+        // Fetch Vehicle Type Sales
         axios.get(`${API.BASE_URL}/dashboard/vehicle-types`)
             .then(res => {
-                // PieChart expects id, value, and label
                 const formatted = res.data.map((item, index) => ({
                     id: index,
                     value: item.count,
@@ -28,21 +29,42 @@ const SalesAnalytics = () => {
             })
             .catch(err => console.error('Vehicle type fetch failed:', err));
 
+        // Fetch Profit Trend
         axios.get(`${API.BASE_URL}/dashboard/profit`)
-            .then(res => setProfitTrend(res.data))
+            .then(res => {
+                const monthOrder = [
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ];
+
+                const grouped = {};
+                res.data.forEach(item => {
+                    if (!grouped[item.year]) grouped[item.year] = [];
+                    grouped[item.year].push(item);
+                });
+
+                for (const year in grouped) {
+                    grouped[year].sort((a, b) =>
+                        monthOrder.indexOf(a.month) - monthOrder.indexOf(b.month)
+                    );
+                }
+
+                setProfitTrend(grouped);
+            })
             .catch(err => console.error('Profit trend fetch failed:', err));
     }, []);
 
     return (
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Typography variant="h4" gutterBottom>Dealership Dashboard</Typography>
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4, pt:15 }}>
+            <Typography variant="h4" gutterBottom>Performance Dashboard</Typography>
 
             <Grid container spacing={4}>
+                {/* Monthly Sales Bar Chart */}
                 <Grid item xs={12} md={6}>
                     <Paper sx={{ p: 2 }}>
                         <Typography variant="h6" gutterBottom>Monthly Sales</Typography>
                         <BarChart
-                            xAxis={[{ scaleType: 'band', data: monthlySales.map(d => d.month) }]}
+                            xAxis={[{ scaleType: 'band', data: monthlySales.map(d => `${d.month.slice(0, 3)} ${d.year}`) }]}
                             series={[{ data: monthlySales.map(d => d.sales), label: 'Vehicles Sold' }]}
                             width={500}
                             height={300}
@@ -50,6 +72,7 @@ const SalesAnalytics = () => {
                     </Paper>
                 </Grid>
 
+                {/* Vehicle Type Sales Pie Chart */}
                 <Grid item xs={12} md={6}>
                     <Paper sx={{ p: 2 }}>
                         <Typography variant="h6" gutterBottom>Sales by Vehicle Type</Typography>
@@ -61,15 +84,33 @@ const SalesAnalytics = () => {
                     </Paper>
                 </Grid>
 
+                {/* Profit Trend Line Chart */}
                 <Grid item xs={12}>
-                    <Paper sx={{ p: 2 }}>
+                    <Paper sx={{ p: 2, minHeight: 300, width: '100%' }}>
                         <Typography variant="h6" gutterBottom>Profit Trend</Typography>
-                        <LineChart
-                            xAxis={[{ data: profitTrend.map(d => d.month) }]}
-                            series={[{ data: profitTrend.map(d => d.profit), label: 'Profit ($)' }]}
-                            width={1000}
-                            height={300}
-                        />
+                        {Object.keys(profitTrend).length === 0 ? (
+                            <Typography color="textSecondary" sx={{ mt: 2 }}>
+                                No profit data available.
+                            </Typography>
+                        ) : (
+                            <LineChart
+                                xAxis={[{
+                                    data: [
+                                        "January", "February", "March", "April", "May", "June",
+                                        "July", "August", "September", "October", "November", "December"
+                                    ],
+                                    label: 'Month',
+                                    scaleType: 'band',
+                                }]}
+                                series={Object.keys(profitTrend).map(year => ({
+                                    data: profitTrend[year].map(p => p.profit),
+                                    label: `Profit ${year}`,
+                                    showMark: true,
+                                }))}
+                                width={1000}
+                                height={300}
+                            />
+                        )}
                     </Paper>
                 </Grid>
             </Grid>

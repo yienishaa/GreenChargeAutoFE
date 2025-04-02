@@ -9,6 +9,8 @@ import Cart from "../pages/Cart";
 import CheckoutPage from '../pages/Checkout';
 import Compare from '../pages/Compare';
 import Login from '../pages/Login';
+import AdminDashbord from "../pages/admin-pages/AdminDashbord";
+import SalesAnalytics from '../pages/admin-pages/SalesAnalytics'
 
 const AppRoutes = () => {
     return (
@@ -22,8 +24,13 @@ const AppRoutes = () => {
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/compare" element={<Compare />} />
             <Route path="/signin" element={<Login />} />
+            <Route path="/adminDashboard" element={<AdminDashbord />} />
+            <Route path="/SalesAnalytics" element={<SalesAnalytics />} />
         </Routes>
     );
 };
 
 export default AppRoutes;
+
+
+//https://aaronmams.github.io/Connect-to-Amazon-RDS-DB-with-MySQL-Workbench/

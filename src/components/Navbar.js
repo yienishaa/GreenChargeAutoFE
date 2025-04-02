@@ -5,13 +5,14 @@ import { useCart } from '../context/CartContext';
 import { IconButton, Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-
 const navLinks = [
   { label: "Home", link: "/" },
   { label: "Vehicles", link: "/vehicles" },
   { label: "Compare", link: "/compare"},
   { label: "Loan Calculator", link: "/loan" },
   { label: "UploadForm", link: "/UploadForm" },
+    { label: "AdminDashbord", link: "/AdminDashbord" },
+    { label: "SalesAnalytics", link: "/SalesAnalytics" },
 ];
 
 const cartId = 0;

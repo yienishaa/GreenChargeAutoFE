@@ -5,13 +5,25 @@ import Typography from '@mui/material/Typography';
 import { createTheme } from '@mui/material/styles';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import DescriptionIcon from '@mui/icons-material/Description';
+import LayersIcon from '@mui/icons-material/Layers';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { useDemoRouter } from '@toolpad/core/internal';
 import logo from "../../images/logo.webp";
 import { PageContainer } from '@toolpad/core/PageContainer';
+import API from "../../globals";
+import {colors} from "@mui/material";
+import SalesAnalytics from "./SalesAnalytics";
+import {useLocation} from "react-router-dom";
+import Orders from "./Orders";
 
 const NAVIGATION = [
+    {
+        kind: 'header',
+        title: 'Main items',
+    },
     {
         segment: 'dashboard',
         title: 'Dashboard',
@@ -22,7 +34,36 @@ const NAVIGATION = [
         title: 'Orders',
         icon: <ShoppingCartIcon />,
     },
+    {
+        kind: 'divider',
+    },
+    {
+        kind: 'header',
+        title: 'Analytics',
+    },
+    {
+        segment: 'reports',
+        title: 'Reports',
+        icon: <BarChartIcon />,
+        children: [
+            {
+                segment: 'sales',
+                title: 'Sales',
+                icon: <DescriptionIcon />,
+
+                
+            },
+            {
+                segment: 'traffic',
+                title: 'Traffic',
+                icon: <DescriptionIcon />,
+            },
+        ],
+    },
+
 ];
+
+
 
 const demoTheme = createTheme({
     cssVariables: {
@@ -40,6 +81,7 @@ const demoTheme = createTheme({
     },
 });
 
+
 function DemoPageContent({ pathname }) {
     return (
         <Box
@@ -52,7 +94,6 @@ function DemoPageContent({ pathname }) {
             }}
         >
             <Typography>Dashboard content for {pathname}</Typography>
-            <PageContainer component="div" sx={{ flexGrow: 1 }}></PageContainer>
         </Box>
     );
 }
@@ -61,36 +102,42 @@ DemoPageContent.propTypes = {
     pathname: PropTypes.string.isRequired,
 };
 
-function AdminDashbord(props) {
+function DashboardLayoutBasic(props) {
     const { window } = props;
+    const location = useLocation();
+    const pathname = location.pathname;
+    console.log(pathname);
 
-    const router = useDemoRouter('/dashboard');
+    const PAGE_COMPONENTS = {
+        '/dashboard': <DemoPageContent pathname="DashboardLayoutBasic" />,
+        '/orders': <Orders />,
+        '/reports/sales': <SalesAnalytics />,
+        '/bashboard/reports/traffic': <DemoPageContent pathname="Traffic" />,
+    };
 
-    // Remove this const when copying and pasting into your project.
-    const demoWindow = window !== undefined ? window() : undefined;
 
     return (
         // preview-start
         <AppProvider
             navigation={NAVIGATION}
-            branding={{
-                logo: <img src={logo} alt="MUI logo" />,
-                title: 'Green Charge Auto',
-                homeUrl: '/toolpad/core/introduction',
-            }}
-            router={router}
             theme={demoTheme}
-            window={demoWindow}
+            branding={{
+                logo: <img src={logo} alt="Green Charge logo" />,
+                title: 'Admin Dashboard',
+                homeUrl: `${API.BASE_URL}`,
+            }}
         >
-            <DashboardLayout>
-                <DemoPageContent pathname={router.pathname} />
+            <DashboardLayout >
+                {PAGE_COMPONENTS[pathname] || (
+                    <Typography sx={{ p: 2 }}>Page not found: {pathname}</Typography>
+                )}
             </DashboardLayout>
         </AppProvider>
         // preview-end
     );
 }
 
-AdminDashbord.propTypes = {
+DashboardLayoutBasic.propTypes = {
     /**
      * Injected by the documentation to work in an iframe.
      * Remove this when copying and pasting into your project.
@@ -98,4 +145,4 @@ AdminDashbord.propTypes = {
     window: PropTypes.func,
 };
 
-export default AdminDashbord;
+export default DashboardLayoutBasic;

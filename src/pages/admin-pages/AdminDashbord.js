@@ -7,14 +7,10 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DescriptionIcon from '@mui/icons-material/Description';
-import LayersIcon from '@mui/icons-material/Layers';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
-import { useDemoRouter } from '@toolpad/core/internal';
 import logo from "../../images/logo.webp";
-import { PageContainer } from '@toolpad/core/PageContainer';
 import API from "../../globals";
-import {colors} from "@mui/material";
 import SalesAnalytics from "./SalesAnalytics";
 import {useLocation} from "react-router-dom";
 import Orders from "./Orders";
@@ -117,7 +113,7 @@ function DashboardLayoutBasic(props) {
 
 
     return (
-        // preview-start
+
         <AppProvider
             navigation={NAVIGATION}
             theme={demoTheme}
@@ -133,15 +129,12 @@ function DashboardLayoutBasic(props) {
                 )}
             </DashboardLayout>
         </AppProvider>
-        // preview-end
+
     );
 }
 
 DashboardLayoutBasic.propTypes = {
-    /**
-     * Injected by the documentation to work in an iframe.
-     * Remove this when copying and pasting into your project.
-     */
+
     window: PropTypes.func,
 };
 

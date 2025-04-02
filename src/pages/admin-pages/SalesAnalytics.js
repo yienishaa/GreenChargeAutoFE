@@ -17,7 +17,7 @@ const SalesAnalytics = () => {
             .then(res => setMonthlySales(res.data))
             .catch(err => console.error('Monthly sales fetch failed:', err));
 
-        // Fetch Vehicle Type Sales
+        // Fetch Vehicle brand Sales
         axios.get(`${API.BASE_URL}/dashboard/vehicle-types`)
             .then(res => {
                 const formatted = res.data.map((item, index) => ({
@@ -59,7 +59,6 @@ const SalesAnalytics = () => {
             <Typography variant="h4" gutterBottom>Performance Dashboard</Typography>
 
             <Grid container spacing={4}>
-                {/* Monthly Sales Bar Chart */}
                 <Grid item xs={12} md={6}>
                     <Paper sx={{ p: 2 }}>
                         <Typography variant="h6" gutterBottom>Monthly Sales</Typography>
@@ -72,7 +71,6 @@ const SalesAnalytics = () => {
                     </Paper>
                 </Grid>
 
-                {/* Vehicle Type Sales Pie Chart */}
                 <Grid item xs={12} md={6}>
                     <Paper sx={{ p: 2 }}>
                         <Typography variant="h6" gutterBottom>Sales by Vehicle Type</Typography>
@@ -84,7 +82,6 @@ const SalesAnalytics = () => {
                     </Paper>
                 </Grid>
 
-                {/* Profit Trend Line Chart */}
                 <Grid item xs={12}>
                     <Paper sx={{ p: 2, minHeight: 300, width: '100%' }}>
                         <Typography variant="h6" gutterBottom>Profit Trend</Typography>

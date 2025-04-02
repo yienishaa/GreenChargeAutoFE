@@ -1,55 +1,79 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
+import {useEffect, useState} from "react";
+import axios from "axios";
+import API from "../../globals";
 
 const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
+    { field: 'id', headerName: 'Order ID', width: 90 },
     {
-        field: 'firstName',
+        field: 'fname',
         headerName: 'First name',
         width: 150,
-        editable: true,
+        editable: false,
     },
     {
-        field: 'lastName',
+        field: 'lname',
         headerName: 'Last name',
         width: 150,
-        editable: true,
+        editable: false,
     },
     {
-        field: 'age',
-        headerName: 'Age',
+        field: 'status',
+        headerName: 'Order Status',
         type: 'number',
         width: 110,
-        editable: true,
+        editable: false,
     },
     {
-        field: 'fullName',
-        headerName: 'Full name',
-        description: 'This column has a value getter and is not sortable.',
-        sortable: false,
+        field: 'totalPrice',
+        headerName: 'Total Price',
+        type: 'number',
         width: 160,
-        valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
+        editable: false,
+
+    },
+    {
+        field: 'createdAt',
+        headerName: 'Order Date',
+        width: 160,
+        editable: false,
     },
 ];
 
-const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 14 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 31 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 31 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 11 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+function Orders() {
 
-export default function Orders() {
+    const [orders, setOrders] = useState([]);
+
+    useEffect(() => {
+        const fetchPurchaseOrders = async () => {
+            try {
+                const response = await axios.get(`${API.BASE_URL}/orders`);
+                console.log(response);
+
+                const formatted = response.data.map(({ orderId,createdAt, ...rest }) => ({
+                    id: orderId,
+                    createdAt: new Date(createdAt).toISOString().split('T')[0],
+                    ...rest,
+                }));
+                setOrders(formatted);
+                console.log(formatted);
+
+
+            } catch (e) {
+                console.log(e.message);
+            } finally {
+                console.log(false);
+            }
+        };
+        fetchPurchaseOrders();
+    }, []);
+
     return (
         <Box sx={{ width: '100%', pt:5 }}>
             <DataGrid
-                rows={rows}
+                rows={orders}
                 columns={columns}
                 initialState={{
                     pagination: {
@@ -64,3 +88,5 @@ export default function Orders() {
         </Box>
     );
 }
+
+export default Orders;

@@ -5,7 +5,7 @@ import axios from "axios";
 import API from "../globals";
 
 export default function Compare() {
-  const [vehicles, setVehicles] = useState([]); // Initialize as an empty array
+  const [vehicles, setVehicles] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [count, setCount] = useState(0);

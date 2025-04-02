@@ -3,12 +3,11 @@ import VehicleCard from "../components/VehicleCard";
 import axios from "axios";
 import {
   Box,
-  CircularProgress,
   Typography,
   TextField,
   MenuItem,
   Slider,
-  Button, Stack, Switch, FormControlLabel, FormControl, InputLabel, Select, OutlinedInput, Chip, IconButton, Tooltip
+  Button, Stack, Switch, FormControlLabel, FormControl, InputLabel, Select, OutlinedInput, Chip, IconButton
 } from "@mui/material";
 
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
@@ -16,35 +15,6 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import API from "../globals";
 
 const Vehicles = () => {
-  // Temporary vehicle testing list
-  // const vehicles = [
-  //   {
-  //     vid: 1,
-  //     brand: "Toyota",
-  //     description: "Help me I'm dying",
-  //     hasBeenInAccident: false,
-  //     manufacturedYear: 2004,
-  //     mileage: 192042.69,
-  //     model: "Prius",
-  //     price: 234567,
-  //     body: "hatchback",
-  //     quantity: 5,
-  //     image: "https://picsum.photos/1920/1080"
-  //   },
-  //   {
-  //     vid: 2,
-  //     brand: "Honda",
-  //     description: "This state of the art fully kitted loaded car is fabulous for road trips and is guaranteed not to blow up on you because that's totally legit.",
-  //     hasBeenInAccident: true,
-  //     manufacturedYear: 2004,
-  //     mileage: 192042.69,
-  //     model: "Odyssey",
-  //     price: 234567.9,
-  //     fuel: "diesel",
-  //     body: "minivan",
-  //     quantity: 0
-  //   },
-  // ];
   const [vehicles, setVehicles] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -108,7 +78,6 @@ const Vehicles = () => {
       try {
         const response = await axios.get(`${API.BASE_URL}/vehicles`);
 
-        // Convert API response to include `id` field for DataGrid
         const formatted = response.data.map(({ vid, ...rest }) => ({
           id: vid,
           ...rest,

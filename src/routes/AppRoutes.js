@@ -9,8 +9,8 @@ import Cart from "../pages/Cart";
 import CheckoutPage from '../pages/Checkout';
 import Compare from '../pages/Compare';
 import Login from '../pages/Login';
-import AdminDashbord from "../pages/admin-pages/AdminDashbord";
 import SalesAnalytics from '../pages/admin-pages/SalesAnalytics'
+import DashboardLayoutBasic from "../pages/admin-pages/AdminDashbord";
 
 const AppRoutes = () => {
     return (
@@ -24,7 +24,8 @@ const AppRoutes = () => {
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/compare" element={<Compare />} />
             <Route path="/signin" element={<Login />} />
-            <Route path="/adminDashboard" element={<AdminDashbord />} />
+            <Route path="/DashboardLayoutBasic" element={<DashboardLayoutBasic />} />
+            <Route path="/*" element={<DashboardLayoutBasic />} />
             <Route path="/SalesAnalytics" element={<SalesAnalytics />} />
         </Routes>
     );

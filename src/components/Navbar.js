@@ -11,7 +11,7 @@ const navLinks = [
   { label: "Compare", link: "/compare"},
   { label: "Loan Calculator", link: "/loan" },
   { label: "UploadForm", link: "/UploadForm" },
-    { label: "AdminDashbord", link: "/AdminDashbord" },
+    { label: "DashboardLayoutBasic", link: "/DashboardLayoutBasic" },
     { label: "SalesAnalytics", link: "/SalesAnalytics" },
 ];
 

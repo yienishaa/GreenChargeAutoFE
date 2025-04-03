@@ -16,6 +16,7 @@ import {useLocation} from "react-router-dom";
 import Orders from "./Orders";
 import {ShoppingBag, TrendingUp} from "@mui/icons-material";
 import {LineChart} from "@mui/x-charts/LineChart";
+import UploadForm from "./UploadForm";
 
 const theme = createTheme({
     cssVariables: true,
@@ -71,12 +72,20 @@ const NAVIGATION = [
             },
         ],
     },
+    {
+        segment: 'uploads',
+        title: 'Add Inventory',
+        icon: <ShoppingCartIcon />,
+    },
 
 ];
 
 
 
 const demoTheme = createTheme({
+    cssVariables:{
+        colorSchemeSelector: 'disableColorSchemeSelector',
+    },
     palette: {
         mode: 'light',
         primary: {
@@ -167,6 +176,34 @@ const demoTheme = createTheme({
                 },
             },
         },
+        MuiInputBase:{
+            styleOverrides: {
+                root: {
+                    background: 'rgba(224,236,208,0.41)',
+                },
+            },
+        },
+        MuiFilledInput:{
+            styleOverrides: {
+                root: {
+                    background: 'rgba(224,236,208,0.41)',
+                },
+            },
+        },
+        MuiButton:{
+            styleOverrides: {
+                root: {
+                    background: 'rgb(11,120,108)',
+                },
+            },
+        },
+        MuiInputLabel: {
+            styleOverrides: {
+                root: {
+                    color: 'rgb(163,163,163)',
+                }
+            }
+        }
     },
 });
 
@@ -192,16 +229,15 @@ DemoPageContent.propTypes = {
 };
 
 function DashboardLayoutBasic(props) {
-    const { window } = props;
     const location = useLocation();
     const pathname = location.pathname;
     console.log(pathname);
 
     const PAGE_COMPONENTS = {
-        '/dashboard': <DemoPageContent pathname="DashboardLayoutBasic" />,
         '/orders': <Orders />,
         '/reports/sales': <SalesAnalytics />,
-        '/bashboard/reports/traffic': <DemoPageContent pathname="Traffic" />,
+        '/reports/traffic': <DemoPageContent pathname="Traffic" />,
+        '/uploads': <UploadForm />,
     };
 
 

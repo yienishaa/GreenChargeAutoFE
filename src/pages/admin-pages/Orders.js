@@ -76,19 +76,18 @@ function Orders() {
     }, []);
 
     return (
-        <Box sx={{ width: '100%', pt:5 , alignItems: 'left', justifyContent: 'flex-start' }}>
+        <Box sx={{ width: '100%', pt:5 ,pl:5,pr:5, alignItems: 'left', justifyContent: 'flex-start' }}>
             <DataGrid
-
                 rows={orders}
                 columns={columns}
                 initialState={{
                     pagination: {
                         paginationModel: {
-                            pageSize: 20,
+                            pageSize: 10,
                         },
                     },
                 }}
-                pageSizeOptions={[20]}
+                pageSizeOptions={[5, 10, 20]}
                 disableRowSelectionOnClick
             />
         </Box>

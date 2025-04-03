@@ -5,8 +5,8 @@ import {
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function Signup() {
-    const [form, setForm] = useState({ username: "", password: "", role: "USER" });
+function Signin() {
+    const [form, setForm] = useState({ username: "", password: "" });
     const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
     const navigate = useNavigate();
 
@@ -16,22 +16,22 @@ function Signup() {
 
     const handleSubmit = async () => {
         try {
-            const res = await axios.post("http://localhost:8080/auth/register", form);
+            const res = await axios.post("http://localhost:8080/auth/login", form);
             localStorage.setItem("token", res.data.token);
-            setSnackbar({ open: true, message: "Signup successful!", severity: "success" });
+            setSnackbar({ open: true, message: "Login successful!", severity: "success" });
             setTimeout(() => navigate("/"), 1500);
         } catch (error) {
             console.error(error);
-            setSnackbar({ open: true, message: "Signup failed", severity: "error" });
+            setSnackbar({ open: true, message: "Login failed", severity: "error" });
         }
     };
 
     return (
         <Container maxWidth="xs">
-            <Typography variant="h5" gutterBottom>Sign Up</Typography>
+            <Typography variant="h5" gutterBottom>Sign In</Typography>
             <TextField fullWidth margin="normal" label="Username" name="username" onChange={handleChange} />
             <TextField fullWidth margin="normal" label="Password" name="password" type="password" onChange={handleChange} />
-            <Button fullWidth variant="contained" color="primary" onClick={handleSubmit}>Register</Button>
+            <Button fullWidth variant="contained" color="primary" onClick={handleSubmit}>Login</Button>
 
             <Snackbar open={snackbar.open} autoHideDuration={3000} onClose={() => setSnackbar({ ...snackbar, open: false })}>
                 <Alert severity={snackbar.severity}>{snackbar.message}</Alert>
@@ -40,4 +40,4 @@ function Signup() {
     );
 }
 
-export default Signup;
+export default Signin;

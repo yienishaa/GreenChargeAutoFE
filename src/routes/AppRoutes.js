@@ -27,6 +27,8 @@ const AppRoutes = () => {
             <Route path="/DashboardLayoutBasic" element={<DashboardLayoutBasic />} />
             <Route path="/*" element={<DashboardLayoutBasic />} />
             <Route path="/SalesAnalytics" element={<SalesAnalytics />} />
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/signup" element={<Signup />} />
         </Routes>
     );
 };

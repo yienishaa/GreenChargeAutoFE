@@ -6,38 +6,43 @@ import axios from "axios";
 import API from "../../globals";
 
 const columns = [
-    { field: 'id', headerName: 'Order ID', width: 90 },
+    {
+        field: 'id',
+        headerName: 'Order ID',
+        flex: 1,
+        headerAlign: 'left',
+    },
     {
         field: 'fname',
         headerName: 'First name',
-        width: 150,
         editable: false,
+        flex: 2,
     },
     {
         field: 'lname',
         headerName: 'Last name',
-        width: 150,
+        flex: 2,
         editable: false,
     },
     {
         field: 'status',
         headerName: 'Order Status',
         type: 'number',
-        width: 110,
+        flex: 2,
         editable: false,
+
     },
     {
         field: 'totalPrice',
         headerName: 'Total Price',
         type: 'number',
-        width: 160,
+        flex: 3,
         editable: false,
-
     },
     {
         field: 'createdAt',
         headerName: 'Order Date',
-        width: 160,
+        flex: 3,
         editable: false,
     },
 ];
@@ -71,18 +76,18 @@ function Orders() {
     }, []);
 
     return (
-        <Box sx={{ width: '100%', pt:5 }}>
+        <Box sx={{ width: '100%', pt:5 ,pl:5,pr:5, alignItems: 'left', justifyContent: 'flex-start' }}>
             <DataGrid
                 rows={orders}
                 columns={columns}
                 initialState={{
                     pagination: {
                         paginationModel: {
-                            pageSize: 20,
+                            pageSize: 10,
                         },
                     },
                 }}
-                pageSizeOptions={[20]}
+                pageSizeOptions={[5, 10, 20]}
                 disableRowSelectionOnClick
             />
         </Box>

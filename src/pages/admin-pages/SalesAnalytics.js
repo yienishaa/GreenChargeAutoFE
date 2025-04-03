@@ -55,7 +55,7 @@ const SalesAnalytics = () => {
     }, []);
 
     return (
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4, pt:15 }}>
+        <Container maxWidth="lg" sx={{  mb: 4, pt:5 }}>
             <Typography variant="h4" gutterBottom>Performance Dashboard</Typography>
 
             <Grid container spacing={4}>

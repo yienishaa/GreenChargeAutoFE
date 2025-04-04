@@ -6,13 +6,11 @@ import { IconButton, Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const navLinks = [
-  { label: "Home", link: "/" },
-  { label: "Vehicles", link: "/vehicles" },
-  { label: "Compare", link: "/compare"},
-  { label: "Loan Calculator", link: "/loan" },
-  { label: "UploadForm", link: "/UploadForm" },
-    { label: "DashboardLayoutBasic", link: "/DashboardLayoutBasic" },
-    { label: "SalesAnalytics", link: "/SalesAnalytics" },
+    { label: "Home", link: "/" },
+    { label: "Vehicles", link: "/vehicles" },
+    { label: "Loan Calculator", link: "/loan" },
+    { label: "Admin Dashboard", link: "/orders" },
+
 ];
 
 const cartId = 0;

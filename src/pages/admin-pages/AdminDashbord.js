@@ -3,10 +3,8 @@ import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import {ThemeProvider, createTheme } from '@mui/material/styles';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import BarChartIcon from '@mui/icons-material/BarChart';
-import DescriptionIcon from '@mui/icons-material/Description';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import logo from "../../images/logo.webp";
@@ -15,7 +13,6 @@ import SalesAnalytics from "./SalesAnalytics";
 import {useLocation} from "react-router-dom";
 import Orders from "./Orders";
 import {ShoppingBag, TrendingUp} from "@mui/icons-material";
-import {LineChart} from "@mui/x-charts/LineChart";
 import UploadForm from "./UploadForm";
 
 const theme = createTheme({
@@ -249,7 +246,7 @@ function DashboardLayoutBasic(props) {
             branding={{
                 logo: <img src={logo} alt="Green Charge logo" />,
                 title: 'Admin Dashboard',
-                homeUrl: `${API.BASE_URL}`,
+                homeUrl: `${API.REACT_APP_SELF}`,
             }}
         >
             <DashboardLayout>

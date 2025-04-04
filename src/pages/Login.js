@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import API from "../globals";
 
 function Login() {
   const [form, setForm] = useState({ username: "", password: "" });
@@ -28,7 +29,7 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8080/auth/login", {
+      const response = await axios.post(`${API.BASE_URL}/auth/login`, {
         username: form.username,
         password: form.password
       });

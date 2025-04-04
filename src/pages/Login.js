@@ -28,12 +28,11 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8080/auth/login", null, {
-        params: {
-          username: form.username,
-          password: form.password
-        }
+      const response = await axios.post("http://localhost:8080/auth/login", {
+        username: form.username,
+        password: form.password
       });
+
 
       localStorage.setItem("token", response.data.token);
       setSnackbar({ open: true, message: "Login successful!", severity: "success" });

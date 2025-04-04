@@ -7,18 +7,22 @@ import {
   TextField,
   MenuItem,
   Slider,
-  Button, Stack, Switch, FormControlLabel, FormControl, InputLabel, Select, OutlinedInput, Chip, IconButton
+  Button, Stack, Switch, FormControlLabel, FormControl, InputLabel, Select, OutlinedInput, Chip, IconButton, Checkbox
 } from "@mui/material";
 
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import API from "../globals";
+import CompareModal from "../components/CompareModal";
+import {isDisabled} from "@testing-library/user-event/dist/utils";
 
 const Vehicles = () => {
   const [vehicles, setVehicles] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sortOption, setSortOption] = useState('');
+  const [compareModalOpen, setCompareModalOpen] = useState(false);
+  const [compareList, setCompareList] = useState([]);
 
   const [state, setState] = React.useState({
     history: false,
@@ -40,6 +44,28 @@ const Vehicles = () => {
 
   const handleFilterChange = (key, value) => {
     setFilters(prev => ({ ...prev, [key]: value }));
+  };
+
+  const handleCompareNow = () => {
+    setCompareModalOpen(true);
+  };
+
+  const handleCloseCompare = () => {
+    handleClearAll();
+    setCompareModalOpen(false);
+  };
+
+  const handleClearAll = () => {
+    setCompareList([]);
+  };
+
+  const toggleCompare = (vehicle) => {
+      if (compareList.some(v => v.id === vehicle.id)) {
+        setCompareList(compareList.filter(v => v.id !== vehicle.id));
+      } else if (compareList.length <= 4) {
+        setCompareList([...compareList, vehicle]);
+      }
+
   };
 
 
@@ -72,6 +98,8 @@ const Vehicles = () => {
     if (sortOption === 'priceHighLow') return b.price - a.price;
     return 0;
   });
+
+
 
   useEffect(() => {
     const fetchVehicles = async () => {
@@ -243,10 +271,60 @@ const Vehicles = () => {
             <ul className="grid grid-cols-3 px-5 gap-5 w-5/6">
               {sortedVehicles.map((vehicle) => (
                   <li key={vehicle.id}>
-                    <VehicleCard vehicle={vehicle} />
+                    <VehicleCard
+                        vehicle={vehicle}
+                        onToggleCompare={toggleCompare}
+                        isSelected={compareList.some(v => v.id === vehicle.id)}
+                        compareDisabled={compareList.length >= 4}
+                        checkVehicleCount
+                    />
+
                   </li>
               ))}
+              <CompareModal
+                  open={compareModalOpen}
+                  onClose={handleCloseCompare}
+                  vehicles={compareList}
+              />
             </ul>
+            {compareList.length > 0 && (
+                <Box className="fixed bottom-0 left-0 right-0 bg-white shadow-lg px-6 py-4 z-50 flex items-center justify-between border-t">
+                  <div className="flex gap-4 overflow-x-auto">
+                    {compareList.map(vehicle => (
+                        <Box key={vehicle.id} className="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded">
+                          <img
+                              src={vehicle.image ? `${API.S3_BUCKET}/${vehicle.image}` : ""}
+                              alt={vehicle.model}
+                              className="h-10 w-10 object-cover rounded"
+                          />
+                          <span className="text-sm font-medium whitespace-nowrap">
+                            {vehicle.brand} {vehicle.model}
+                          </span>
+                          <button
+                              onClick={() => toggleCompare(vehicle)}
+                              className="text-red-600 text-xl font-bold"
+                          >
+                            ×
+                          </button>
+                        </Box>
+                    ))}
+                  </div>
+                  <Button
+                      variant="contained"
+                      onClick={handleCompareNow}
+                      disabled={compareList.length < 2}
+                  >
+                    Compare Now
+                  </Button>
+                  <Button
+                      variant="contained"
+                      onClick={handleClearAll}
+                      disabled={compareList.length < 2}
+                  >
+                    Clear All
+                  </Button>
+                </Box>
+            )}
           </div>
         </Box>
 

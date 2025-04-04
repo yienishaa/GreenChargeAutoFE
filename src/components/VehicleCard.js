@@ -4,15 +4,16 @@ import {
   CarCrash,
   NoCrash,
   ArrowOutward,
-  Inventory,
+  Inventory
 } from "@mui/icons-material";
+import { Checkbox } from "@mui/material";
 import placeholder from "../images/placeholder.png";
 import { Link } from "react-router-dom";
 import { Divider } from "@mui/material";
 import API from "../globals";
 
 
-export default function VehicleCard({ vehicle }) {
+export default function VehicleCard({ vehicle, onToggleCompare, isSelected, compareDisabled }) {
   return (
     <div className="shadow-lg flex-col rounded-xl border-gray-300 border-2 h-full flex justify-between overflow-hidden">
       <div className="relative cursor-default">
@@ -70,6 +71,15 @@ export default function VehicleCard({ vehicle }) {
             maximumFractionDigits: 2,
           })}
         </h2>
+        <div className="flex items-center gap-3">
+          <Checkbox
+              checked={isSelected}
+              onChange={() => onToggleCompare(vehicle)}
+              disabled={!isSelected && compareDisabled }
+              size="small"
+          />
+          <span className="text-sm">Compare</span>
+        </div>
         <Link
           to={`/vehicles/${vehicle.id}`}
           className="flex text-blue-600 hover:text-blue-800"

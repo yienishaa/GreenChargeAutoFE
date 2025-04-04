@@ -3,8 +3,14 @@ import CompareCard from "../components/CompareCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import API from "../globals";
+import React from "react";
+import { useLocation } from "react-router-dom";
+import { Box, Card, CardContent, Typography } from "@mui/material";
 
 export default function Compare() {
+  const location = useLocation();
+  //const vehicles = location.state?.vehicles || [];
+
   const [vehicles, setVehicles] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);

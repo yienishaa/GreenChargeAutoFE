@@ -11,6 +11,8 @@ import Compare from '../pages/Compare';
 import Login from '../pages/Login';
 import SalesAnalytics from '../pages/admin-pages/SalesAnalytics'
 import DashboardLayoutBasic from "../pages/admin-pages/AdminDashbord";
+import Signin from "../components/Signin";
+import Signup from "../components/Signup";
 
 const AppRoutes = () => {
     return (

@@ -48,7 +48,7 @@ function Login() {
 
   return (
     <Container maxWidth="sm">
-      <Box mt={6}>
+      <Box pt={15}>
         <Typography variant="h4" align="center" gutterBottom>
           Login
         </Typography>

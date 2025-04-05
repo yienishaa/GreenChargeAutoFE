@@ -76,11 +76,14 @@ const VehicleDetail = () => {
   const averageRating = (reviews) => {
     let sum = 0;
     let count = 0;
-    reviews.forEach((review) => {
-      sum += review.stars;
-      count += 1;
-    });
-    const avg = sum / count;
+    let avg = 0;
+    if (reviews != null && reviews) {
+      reviews.forEach((review) => {
+        sum += review.stars;
+        count += 1;
+      });
+      avg = sum / count;
+    }
     return avg;
   };
 
@@ -140,7 +143,7 @@ const VehicleDetail = () => {
           <img
             src={`${API.S3_BUCKET}/`+vehicle.image || placeholder}
             alt="car"
-            className="h-full object-cover col-span-2"
+            className="h-auto object-cover col-span-2"
           />
           <div className="grid grid-rows-5 pb-5 w-full border-gray-200 border-2 border-l-0 rounded-r-xl px-6 py-1 gap-y-2">
             <span className="w-full flex flex-col justify-end h-full">
@@ -240,7 +243,7 @@ const VehicleDetail = () => {
             </div>
           </div>
           <div className="grid grid-cols-3">
-            {vehicle.reviews.map((review) => (
+            {vehicle.reviews?.map((review) => (
               <div className="m-3 border-2 p-3 rounded-xl">
                 <h1 className="font-bold text-xl">{review.author}</h1>
                 <Stars rating={review.stars} />

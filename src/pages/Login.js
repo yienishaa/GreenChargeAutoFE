@@ -10,12 +10,17 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+import { useCart } from "../context/CartContext";
+
 import API from "../globals";
+
 
 function Login() {
   const [form, setForm] = useState({ username: "", password: "" });
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "info" });
   const navigate = useNavigate();
+  const { loadCartItems } = useCart();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -34,12 +39,18 @@ function Login() {
         password: form.password
       });
 
+      const { token, userId, role } = response.data;
 
-      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("token", token);
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("role", role);
+
+      await loadCartItems();
+
       setSnackbar({ open: true, message: "Login successful!", severity: "success" });
 
       setTimeout(() => {
-        navigate("/"); // redirect after login
+        navigate("/");
       }, 1000);
     } catch (err) {
       setSnackbar({ open: true, message: "Login failed. Check credentials.", severity: "error" });

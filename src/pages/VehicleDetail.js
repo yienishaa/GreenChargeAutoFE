@@ -6,7 +6,7 @@ import {
   Alert, Rating
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import { Link } from "react-router-dom";
 import placeholder from "../images/placeholder.png";
 import {AddShoppingCart} from "@mui/icons-material";
@@ -25,6 +25,7 @@ const VehicleDetail = () => {
   const [error, setError] = useState(null);
   const [activeColor, setActiveColor] = useState("");
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -90,9 +91,17 @@ const VehicleDetail = () => {
   const colorCounts = countColors(vehicle.colors);
 
   const addToCart = async (vehicle) => {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+
+    if(!token || !userId) {
+      setSnackbar({ open: true, message: "Please log in to add items to your cart.", severity: "info" });
+      navigate("/signin");
+      return;
+    }
+
     try{
       setLoading(true);
-      const userId = 1;
 
       const payload = {
         vid: vehicle.vid,
@@ -100,14 +109,21 @@ const VehicleDetail = () => {
         quantity: 1,
       };
 
-      await axios.post(`${API.BASE_URL}/shopping-cart/add-to-cart`, payload);
+      await axios.post(`${API.BASE_URL}/shopping-cart/add-to-cart`, payload, {
+        headers:{
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       setSnackbar({ open: true, message: "Item added to cart!", severity: "success" });
       loadCartItems();
 
-    }catch(e){
-      console.log(e);
+    } catch(e) {
+
       setSnackbar({ open: true, message: "Failed to add item", severity: "error" });
-    }finally {
+
+    } finally {
+
       setLoading(false); // stop loading
     }
 

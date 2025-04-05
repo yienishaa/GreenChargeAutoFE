@@ -9,6 +9,7 @@ import CheckoutPage from '../pages/Checkout';
 import Login from '../pages/Login';
 import DashboardLayoutBasic from "../pages/admin-pages/AdminDashbord";
 import Signup from "../components/Signup";
+import OrderConfirmation from "../pages/OrderConfirmation";
 
 const AppRoutes = () => {
         //const { user } = useAuth();
@@ -25,6 +26,7 @@ const AppRoutes = () => {
                     <Route path="/orders" element={<DashboardLayoutBasic />} />
                     <Route path="/*" element={<DashboardLayoutBasic />} />
                     <Route path="/signup" element={<Signup />} />
+                    <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
             </Routes>
     );
 };

@@ -11,12 +11,20 @@ import {
     Alert,
     Box
 } from "@mui/material";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Checkout() {
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate("/signin");
+        }
+    }, []);
+    
     const { cartItems, onCheckout } = useCart();
     const navigate = useNavigate();
 
@@ -48,6 +56,7 @@ function Checkout() {
 
         try {
             console.log("cartItems:", cartItems);
+
             const payload = {
                 fname: shippingInfo.fullName.split(" ")[0] || shippingInfo.fullName,
                 lname: shippingInfo.fullName.split(" ")[1] || "",
@@ -57,15 +66,15 @@ function Checkout() {
                     postalCode: shippingInfo.postalCode
                 },
                 cart: cartItems.map(item => ({
-                    vid: item.id,
+                    vid: item.vid, 
                     quantity: item.quantity
                 }))
             };
 
-            const response = await axios.post("http://localhost:8080/orders/checkout", payload, {
-                //headers: {
-                //    Authorization: `Bearer ${localStorage.getItem("token")}`
-                //}
+            const response = await axios.post(`${API.BASE_URL}/orders/checkout`, payload, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
             });
 
             console.log("Order placed:", response.data);
@@ -87,7 +96,7 @@ function Checkout() {
     };
 
     return (
-        <Container maxWidth="md" sx={{ mt: 6 }}>
+        <Container maxWidth="md" sx={{ mt: 12 }}>
             <Typography variant="h4" gutterBottom>Checkout</Typography>
 
             <Grid container spacing={4}>

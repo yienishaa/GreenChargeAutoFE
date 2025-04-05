@@ -45,8 +45,30 @@ export const CartProvider = ({ children }) => {
         }
     };
 
-    const onCheckout = () => {
-        alert('Proceeding to checkout...');
+    const onCheckout = async (checkoutInfo) => {
+        const payload = {
+            fname: checkoutInfo.fname,
+            lname: checkoutInfo.lname,
+            address: {
+                street: checkoutInfo.street,
+                city: checkoutInfo.city,
+                postalCode: checkoutInfo.postalCode
+            },
+            cart: cartItems.map(item => ({
+                vid: item.vid,
+                quantity: item.quantity
+            }))
+        };
+    
+        try {
+            const response = await axios.post(`${API.BASE_URL}/orders/checkout`, payload);
+            console.log("Order placed:", response.data);
+            setCartItems([]); // Clear cart
+            alert("Order placed successfully!");
+        } catch (error) {
+            console.error("Checkout failed:", error);
+            alert("Checkout failed!");
+        }
     };
 
     const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);

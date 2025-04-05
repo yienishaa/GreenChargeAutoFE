@@ -47,6 +47,7 @@ function Login() {
         username: form.username,
         password: form.password
       });
+      console.log(response.data);
 
       const { token, userId, role } = response.data;
 
@@ -76,11 +77,11 @@ function Login() {
     try {
       const response = await axios.post(`${API.BASE_URL}/auth/register/${email}`);
 
-      const { token, message } = response.data;
+      const { token, message, userId, role } = response.data;
 
       localStorage.setItem("token", token);
-      //localStorage.setItem("userId", userId);
-      //localStorage.setItem("role", role);
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("role", role);
 
       await loadCartItems();
 

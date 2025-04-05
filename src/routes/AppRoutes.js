@@ -8,7 +8,6 @@ import Cart from "../pages/Cart";
 import CheckoutPage from '../pages/Checkout';
 import Login from '../pages/Login';
 import DashboardLayoutBasic from "../pages/admin-pages/AdminDashbord";
-import Signin from "../components/Signin";
 import Signup from "../components/Signup";
 
 const AppRoutes = () => {
@@ -25,7 +24,6 @@ const AppRoutes = () => {
                     <Route path="/signin" element={<Login />} />
                     <Route path="/orders" element={<DashboardLayoutBasic />} />
                     <Route path="/*" element={<DashboardLayoutBasic />} />
-                    <Route path="/signin" element={<Signin />} />
                     <Route path="/signup" element={<Signup />} />
             </Routes>
     );

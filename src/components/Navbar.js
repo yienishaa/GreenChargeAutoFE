@@ -83,7 +83,7 @@ function Navbar() {
         ) : (
           <Link to="/signin">
             <button className="border-2 px-3 py-1 rounded-lg border-white hover:brightness-90">
-              Sign In
+              Sign In/Register
             </button>
           </Link>
         )}

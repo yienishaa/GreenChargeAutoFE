@@ -81,7 +81,7 @@ export default function VehicleCard({ vehicle, onToggleCompare, isSelected, comp
           <span className="text-sm">Compare</span>
         </div>
         <Link
-          to={`/vehicles/${vehicle.id}`}
+          to={`/vehicles/${vehicle.vid}`}
           className="flex text-blue-600 hover:text-blue-800"
         >
           View More <ArrowOutward />

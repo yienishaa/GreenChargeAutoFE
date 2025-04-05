@@ -24,7 +24,7 @@ const OrderConfirmation = () => {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/orders/${orderId}`);
+        const res = await axios.get(`${API.BASE_URL}/orders/${orderId}`);
         setOrder(res.data);
       } catch (err) {
         setError("Failed to load order. Please try again.");

@@ -71,7 +71,7 @@ function Checkout() {
                 }))
             };
 
-            const response = await axios.post("http://localhost:8080/orders/checkout", payload, {
+            const response = await axios.post(`${API.BASE_URL}/orders/checkout`, payload, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 }

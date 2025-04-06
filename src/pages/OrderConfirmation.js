@@ -14,18 +14,21 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import API from "../globals";
+import {useCart} from "../context/CartContext";
 
 const OrderConfirmation = () => {
   const { orderId } = useParams();
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const { cartItems, onCheckout , loadCartItems} = useCart();
 
   useEffect(() => {
     const fetchOrder = async () => {
       try {
         const res = await axios.get(`${API.BASE_URL}/orders/${orderId}`);
         setOrder(res.data);
+        loadCartItems();
       } catch (err) {
         setError("Failed to load order. Please try again.");
         console.error(err);

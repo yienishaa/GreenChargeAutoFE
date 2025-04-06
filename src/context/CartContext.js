@@ -49,6 +49,10 @@ export const CartProvider = ({ children }) => {
 
 
     const onCheckout = async (checkoutInfo) => {
+        if (!checkoutInfo) {
+            console.error("checkoutInfo is required");
+            return;
+        }
         const payload = {
             fname: checkoutInfo.fname,
             lname: checkoutInfo.lname,

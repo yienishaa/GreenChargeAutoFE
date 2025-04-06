@@ -115,6 +115,8 @@ const VehicleDetail = () => {
         },
       });
 
+      console.log(payload);
+
       setSnackbar({ open: true, message: "Item added to cart!", severity: "success" });
       loadCartItems();
 

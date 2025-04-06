@@ -22,11 +22,13 @@ function Navbar() {
   const navigate = useNavigate();
   const { totalQuantity, loadCartItems } = useCart(); 
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
+  const [role, setRole] = useState(localStorage.getItem("role"));
 
   useEffect(() => {
     const interval = setInterval(() => {
       const hasToken = !!localStorage.getItem("token");
       setLoggedIn(hasToken);
+      setRole(localStorage.getItem("role"));
     }, 500);
 
     return () => clearInterval(interval);
@@ -50,6 +52,12 @@ function Navbar() {
     navigate("/signin");
   };
 
+  useEffect(() => {
+    if (loggedIn) {
+      loadCartItems();
+    }
+  }, [loggedIn]);
+
   return (
     <div className="bg-gradient-to-b text-white from-lime-600 to-transparent via-70% via-lime-600 px-5 justify-between flex fixed w-full top-0 z-10">
       <div className="flex-col flex items-center align-middle justify-center">
@@ -58,17 +66,23 @@ function Navbar() {
       </div>
 
       <ul className="gap-x-8 flex items-end mb-7">
-        {navLinks.map((link) => (
-          <li key={link.label} className="px-3 py-1 rounded-md hover:bg-gray-100 hover:bg-opacity-50 hover:brightness-75 hover:text-emerald-950 transition-colors duration-200">
-            <Link className="font-sans font-light" to={link.link}>{link.label}</Link>
-          </li>
-        ))}
+        {navLinks.map((link) => {
+          if (link.label === "Admin Dashboard" && role !== "ADMIN") {
+            return null;
+          }
+          return (
+              <li key={link.label}
+                  className="px-3 py-1 rounded-md hover:bg-gray-100 hover:bg-opacity-50 hover:brightness-75 hover:text-emerald-950 transition-colors duration-200">
+                <Link className="font-sans font-light" to={link.link}>{link.label}</Link>
+              </li>
+          );
+        })}
       </ul>
 
       <div className="flex items-center gap-x-10">
         <Link to={`/cart/${cartId}`}>
           <IconButton>
-            <Badge color="secondary" badgeContent={totalQuantity}>
+            <Badge color="secondary" badgeContent={totalQuantity} showZero >
               <ShoppingCartIcon />
             </Badge>
           </IconButton>

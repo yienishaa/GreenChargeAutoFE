@@ -26,7 +26,7 @@ function Checkout() {
         }
     }, []);
     
-    const { cartItems, onCheckout } = useCart();
+    const { cartItems} = useCart();
     const navigate = useNavigate();
 
     const [shippingInfo, setShippingInfo] = useState({
@@ -48,6 +48,19 @@ function Checkout() {
     const handleChange = (e) => {
         setShippingInfo({ ...shippingInfo, [e.target.name]: e.target.value });
     };
+
+    const deleteCart = async () => {
+        const userId = localStorage.getItem("userId");
+        if (!userId) return;
+
+        try {
+            await axios.delete(`${API.BASE_URL}/shopping-cart/${userId}/delete-all`);
+            console.log("Cart deleted successfully");
+        } catch (error) {
+            console.error("Failed to delete cart:", error);
+        }
+    };
+
 
     const handleSubmit = async () => {
         if (Object.values(shippingInfo).some(val => !val.trim())) {
@@ -79,18 +92,20 @@ function Checkout() {
             });
 
             console.log("Order placed:", response.data);
+            const orderId = response.data.orderId;
+            console.log("orderId:", orderId);
 
-            onCheckout();
             setSnackbar({ open: true, message: "Order placed successfully!", severity: "success" });
+            await deleteCart();
+            navigate(`/order-confirmation/${orderId}`);
 
-            setTimeout(() => {
-                navigate("/");
-            }, 1500);
         } catch (error) {
             console.error("Checkout failed:", error);
             setSnackbar({ open: true, message: "Checkout failed. Try again.", severity: "error" });
         }
     };
+
+
 
     const handleSnackbarClose = () => {
         setSnackbar({ ...snackbar, open: false });
